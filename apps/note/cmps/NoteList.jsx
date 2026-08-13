@@ -1,5 +1,5 @@
 const { Link } = ReactRouterDOM
-import { NotePreview } from "./NotePreview"
+// import { NotePreview } from "./NotePreview"
 
 export function NoteList({ notes, onRemoveNote }) {
     return <section className="note-list">
