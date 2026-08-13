@@ -1,25 +1,31 @@
 const { useState, useEffect } = React
 const { Link, useSearchParams } = ReactRouterDOM
 
-// import { NoteList } from "../cmps/NoteList"
-import { notes, noteService } from "../services/note.service"
-import { utilService } from "../../../services/util.service"
-import { showErrorMsg, showSuccessMsg } from "../../../services/event-bus.service"
+// import { NoteList } from "../cmps/NoteList.jsx"
+import { notes, noteService } from "../services/note.service.js"
+import { utilService } from "../../../services/util.service.js"
+import { showErrorMsg, showSuccessMsg } from "../../../services/event-bus.service.js"
 
 
 export function NoteIndex() {
-    const [notes, setNotes] = useState(null)
+	const [notes, setNotes] = useState(null)
 
 	const [searchParams, setSearchParams] = useSearchParams()
 	const [filterBy, setFilterBy] = useState(noteService.getFilterFromSearchParams(searchParams))
- 
 
-    function loadNotes() {
-        return noteService.query()
-        .then(notes => setNotes(notes))
-    }
+	useEffect(() => {
+		setSearchParams(filterBy)
+		loadNotes()
+	}, [filterBy])
 
-    function onRemoveNote(noteId) {
+
+	function loadNotes() {
+		return noteService.query(filterBy)
+			.then(notes => setNotes(notes))
+			.catch(err => showErrorMsg(`Couldn't load notes`))
+	}
+
+	function onRemoveNote(noteId) {
 		noteService
 			.remove(noteId)
 			.then(() => {
@@ -29,12 +35,14 @@ export function NoteIndex() {
 			})
 			.catch(err => showErrorMsg(`Couldn't remove ${noteId}`))
 	}
-   
-    return (
-    <div className="note-index">
-		<pre>{JSON.stringify(notes, null, 2)}</pre>
+
+	if (!notes) return <div className="note-index">Loading...</div>
+
+	return (
+		<div className="note-index">
+			<pre>{JSON.stringify(notes, null, 2)}</pre>
 		</div>
-        )
+	)
 }
 
 
