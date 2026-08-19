@@ -1,6 +1,6 @@
 const { useState, useEffect } = React
 
-export function NoteFilter({ filterBy, onSetFilter, handleFromClick }) {
+export function NoteFilter({ filterBy, onSetFilter }) {
 
     const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
 
@@ -22,19 +22,18 @@ export function NoteFilter({ filterBy, onSetFilter, handleFromClick }) {
                 value = target.checked
                 break
         }
-        console.log(filterByToEdit)
         setFilterByToEdit(prevFilter => ({ ...prevFilter, [field]: value }))
     }
 
-    const { noteTitle } = filterByToEdit
+    const { txt } = filterByToEdit
 
     return (
         <section className="note-filter">
-            <form className="form-filter" onClick={handleFromClick}>
-                <button className="search-btn"><i className="fa-solid fa-mag-glass"></i></button>
+            <form className="form-filter" onSubmit={ev => ev.preventDefault()}>
+                <button className="search-btn"><i className="fa-solid fa-magnifying-glass"></i></button>
                 <input
                     onChange={handleChange}
-                    value={noteTitle}
+                    value={txt}
                     type="search"
                     name="txt"
                     placeholder="Search" />

@@ -24,104 +24,91 @@ function _createNotes() {
                 1112222,
                 'NoteTxt',
                 true,
-                { backgroundColor: '#00d' },
-                { txt: 'Fullstack Me Baby!' }
+                { backgroundColor: '#E3DBBB' },
+                { txt: 'Sprint 3 review is on Sunday. Both apps have to be reachable from the main nav.' }
             ), _createNote(
                 'n102',
                 1112223,
                 'NoteImg',
-                false,
-                { backgroundColor: '#0d0' },
+                true,
+                { backgroundColor: '#F8F3E1' },
                 {
-                    url: 'http://some-img/me',
-                    title: 'Bobi and Me'
+                    imgUrl: 'https://picsum.photos/id/1025/400/300',
+                    title: 'Bobi and me'
                 }
             ), _createNote(
                 'n103',
                 1112224,
                 'NoteTodos',
                 false,
-                { backgroundColor: '#d00' },
+                { backgroundColor: '#AEB784' },
                 {
-                    title: 'Get my stuff together',
-                    todos: [{
-                        txt: 'Driving license',
-                        isDone: true
-                    },
-                    {
-                        txt: 'Coding power',
-                        isDone: false
-                    }
+                    title: 'Before submission',
+                    todos: [
+                        { txt: 'Push to GitHub Pages', isChecked: true },
+                        { txt: 'Check both apps on a phone', isChecked: false },
+                        { txt: 'Write the README', isChecked: false }
                     ]
                 }
             ), _createNote(
                 'n104',
                 1112225,
                 'NoteTxt',
-                true,
-                { backgroundColor: '#00d' },
-                { txt: 'Fullstack Me Baby!' }
+                false,
+                { backgroundColor: '#F8F3E1' },
+                { txt: 'Ask Omer what the label picker should do when a note has no labels yet.' }
             ), _createNote(
                 'n105',
                 1112226,
                 'NoteImg',
                 false,
-                { backgroundColor: '#0d0' },
+                { backgroundColor: '#E3DBBB' },
                 {
-                    url: 'http://some-img/me',
-                    title: 'Bobi and Me'
+                    imgUrl: 'https://picsum.photos/id/1015/400/300',
+                    title: 'Somewhere up north'
                 }
             ), _createNote(
                 'n106',
                 1112227,
-                'NoteTodos',
+                'NoteVideo',
                 false,
-                { backgroundColor: '#d00' },
+                { backgroundColor: '#F8F3E1' },
                 {
-                    title: 'Get my stuff together',
-                    todos: [{
-                        txt: 'Driving license',
-                        isDone: true
-                    },
-                    {
-                        txt: 'Coding power',
-                        isDone: false
-                    }
-                    ]
+                    videoUrl: 'https://www.youtube.com/embed/aqz-KE-bpKQ',
+                    title: 'Big Buck Bunny'
                 }
             ), _createNote(
                 'n107',
                 1112228,
                 'NoteTxt',
-                true,
-                { backgroundColor: '#00d' },
-                { txt: 'Fullstack Me Baby!' }
+                false,
+                { backgroundColor: '#AEB784' },
+                { txt: 'Coffee beans, oat milk, and something for Friday dinner.' }
             ), _createNote(
                 'n108',
                 1112229,
-                'NoteImg',
+                'NoteTodos',
                 false,
-                { backgroundColor: '#0d0' },
+                { backgroundColor: '#E3DBBB' },
                 {
-                    url: 'http://some-img/me',
-                    title: 'Bobi and Me'
+                    title: 'Groceries',
+                    todos: [
+                        { txt: 'Olive oil', isChecked: false },
+                        { txt: 'Tomatoes', isChecked: true },
+                        { txt: 'Bread', isChecked: false }
+                    ]
                 }
             ), _createNote(
                 'n109',
                 1112230,
                 'NoteTodos',
                 false,
-                { backgroundColor: '#d00' },
+                { backgroundColor: '#F8F3E1' },
                 {
-                    title: 'Get my stuff together',
-                    todos: [{
-                        txt: 'Driving license',
-                        isDone: true
-                    },
-                    {
-                        txt: 'Coding power',
-                        isDone: false
-                    }
+                    title: 'Weekend',
+                    todos: [
+                        { txt: 'Fix the bike', isChecked: false },
+                        { txt: 'Call mom', isChecked: true }
                     ]
                 }
             )
@@ -171,13 +158,12 @@ function save(note, isPinned = false) {
 function getEmptyNote(
     id = utilService.makeId(),
     createdAt = Date.now(),
-    type = ['NoteTxt'],
+    type = 'NoteTxt',
     isPinned = false,
     style = {
         backgroundColor: '#ffffff'
     },
     info = { txt: '' }) {
-    console.log(`${id}`)
     return {
         id,
         createdAt,

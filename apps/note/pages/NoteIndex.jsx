@@ -1,12 +1,11 @@
-const { useState, useEffect, Fragment, useRef } = React
-const { Link, useSearchParams, useNavigate } = ReactRouterDOM
+const { useState, useEffect, useRef } = React
+const { useSearchParams } = ReactRouterDOM
 
-import { NoteList } from "../cmps/NoteList.jsx"
 import { NotePreview } from "../cmps/NotePreview.jsx"
 import { NoteFilter } from "../cmps/NoteFilter.jsx"
 import { Menu } from "../cmps/Menu.jsx"
-import { notes, noteService } from "../services/note.service.js"
-import { utilService } from "../../../services/util.service.js"
+import { ColorPicker } from "../cmps/ColorPicker.jsx"
+import { noteService } from "../services/note.service.js"
 import { showErrorMsg, showSuccessMsg } from "../../../services/event-bus.service.js"
 
 
@@ -15,10 +14,10 @@ export function NoteIndex() {
 
 	const [searchParams, setSearchParams] = useSearchParams()
 	const [filterBy, setFilterBy] = useState(noteService.getFilterFromSearchParams(searchParams))
-	const [showFilterOption, setShowFilterOption] = useState(false)
 	const [noteToAdd, setNoteToAdd] = useState(noteService.getEmptyNote())
 	const [isExpandedMenu, setIsExpandedMenu] = useState(false)
 	const [isExpandedForm, setIsExpandedForm] = useState(false)
+	const [isNoteStyle, setIsNoteStyle] = useState(false)
 
 	const noteToAddRef = useRef(noteToAdd)
 
@@ -26,7 +25,6 @@ export function NoteIndex() {
 		setSearchParams(filterBy)
 		loadNotes()
 	}, [filterBy])
-
 
 	useEffect(() => {
 		document.body.style.backgroundColor = '#FFFFFF'
@@ -50,25 +48,24 @@ export function NoteIndex() {
 			.catch(err => showErrorMsg(`Couldn't load notes`))
 	}
 
-
+	// clicking outside the form collapses it, and saves it if anything was typed
 	function handleBodyClick(ev) {
-		if (!ev.target.closest('.collapsible-element')) {
-			setIsExpandedForm(false)
+		if (ev.target.closest('.collapsible-element')) return
 
-			if (noteToAddRef.current.noteTitle || noteToAddRef.current.info.txt || noteToAddRef.current.info.drawingUrl ||
-				noteToAddRef.current.info.imgUrl || noteToAddRef.current.info.videoUrl || noteToAddRef.current.info.todos) {
-				onSubmit(noteToAddRef.current, true)
-			}
-			resetValues()
-		}
+		setIsExpandedForm(false)
+		setIsNoteStyle(false)
+
+		const { noteTitle, info = {} } = noteToAddRef.current
+		if (noteTitle || info.txt) onAddNote(noteToAddRef.current)
+		else resetValues()
 	}
 
 	function onSetFilter(filterByToEdit) {
 		setFilterBy(prevFilter => ({ ...prevFilter, ...filterByToEdit }))
 	}
 
-	function handleFromClick() {
-		setShowFilterOption(true)
+	function handleTypeChange(value) {
+		setFilterBy(prevFilter => ({ ...prevFilter, type: value }))
 	}
 
 	function handleInfoChange({ target }) {
@@ -77,233 +74,166 @@ export function NoteIndex() {
 			case 'number':
 			case 'range':
 				value = +value
-				break;
+				break
 
 			case 'checkbox':
 				value = target.checked
 				break
 		}
 
-		function onClearForm() {
-			setNoteToAdd(noteService.getEmptyNote())
-		}
+		setNoteToAdd(prevNote => {
+			if (field === 'noteTitle') return { ...prevNote, noteTitle: value }
+			return { ...prevNote, info: { ...prevNote.info, [field]: value } }
+		})
+	}
 
-		function onPinNote(note) {
-			const noteToPin = { ...note, isPinned: !note.isPinned }
-			noteService.save(noteToPin, noteToPin.isPinned)
-				.then(() => loadNotes())
-				.catch(err => console.error('Error pin a book:', err))
-		}
+	function onSetNoteStyle(style) {
+		setNoteToAdd(prevNote => ({ ...prevNote, style }))
+	}
 
-		function onDuplicateNote(note) {
-			const noteToDuplicate = { ...note, id: '', isPinned: false }
-			noteService.save(noteToDuplicate)
-				.then(() => {
-					console.log('note duplicated')
-					showSuccessMsg('Note has been duplicated successfully')
-					loadNotes()
-				})
-				.catch(err => {
-					console.log('err:', err)
-					showErrorMsg(`Problems duplicating note`)
-				})
-		}
+	function onToggleIsPinned() {
+		setNoteToAdd(prevNote => ({ ...prevNote, isPinned: !prevNote.isPinned }))
+	}
 
-		function resetValues() {
-			setCmpType('NoteTxt')
-			setIsNoteStyle(false)
-			setTodosCounter(0)
-			setNoteToAdd(noteService.getEmptyNote())
-		}
+	function resetValues() {
+		setIsExpandedForm(false)
+		setIsNoteStyle(false)
+		setNoteToAdd(noteService.getEmptyNote())
+	}
 
-		function onRemoveNote(noteId) {
-			noteService
-				.remove(noteId)
-				.then(() => {
-					setNotes(prev => prev.filter(note => note.id !== noteId))
-					onClearFilter()
-					showSuccessMsg(`note ${noteId} removed`)
-				})
-				.catch(err => showErrorMsg(`Couldn't remove ${noteId}`))
-		}
+	// a brand new note has to go through post(), so drop the placeholder id
+	function onAddNote(note) {
+		noteService.save({ ...note, id: '' })
+			.then(() => {
+				showSuccessMsg('Note has been saved successfully')
+				resetValues()
+				loadNotes()
+			})
+			.catch(err => {
+				console.log('err:', err)
+				showErrorMsg(`Problems saving note`)
+			})
+	}
 
-		function handleTypeChange(value) {
-			setFilterBy(prevFilter => ({ ...prevFilter, type: value }))
-		}
+	function onPinNote(note) {
+		const noteToPin = { ...note, isPinned: !note.isPinned }
+		noteService.save(noteToPin, noteToPin.isPinned)
+			.then(() => loadNotes())
+			.catch(err => console.error('Error pinning a note:', err))
+	}
 
-		const bgColor = noteToAdd.style.backgroundColor
+	function onDuplicateNote(note) {
+		const noteToDuplicate = { ...note, id: '', isPinned: false }
+		noteService.save(noteToDuplicate)
+			.then(() => {
+				showSuccessMsg('Note has been duplicated successfully')
+				loadNotes()
+			})
+			.catch(err => {
+				console.log('err:', err)
+				showErrorMsg(`Problems duplicating note`)
+			})
+	}
 
-		if (!notes) return <div className="note-index">Loading...</div>
+	function onRemoveNote(noteId) {
+		noteService.remove(noteId)
+			.then(() => {
+				setNotes(prev => prev.filter(note => note.id !== noteId))
+				showSuccessMsg(`note ${noteId} removed`)
+			})
+			.catch(err => showErrorMsg(`Couldn't remove ${noteId}`))
+	}
 
-		return (
-			<div className="note-index">
-				<section className="main-note">
-					<section className="keep-header">
-						<div className="menu-and-logo">
-							<button className="note-bars-btn" onClick={() => { setIsExpandedMenu(prevValue => !prevValue) }}>
-								<img src="assets\img\menu.png" />
-							</button>
-							<div className="keep-logo">
-								<img src="assets\img\keeps.png" />
-								<span>Keep</span>
-							</div>
+	if (!notes) return <div className="note-index">Loading...</div>
+
+	const bgColor = noteToAdd.style.backgroundColor
+
+	return (
+		<div className="note-index">
+			<section className="main-note">
+				<section className="keep-header">
+					<div className="menu-and-logo">
+						<button className="note-bars-btn" onClick={() => setIsExpandedMenu(prevValue => !prevValue)}>
+							<i className="fa-solid fa-bars"></i>
+						</button>
+						<div className="keep-logo">
+							<i className="fa-regular fa-lightbulb"></i>
+							<span>Keep</span>
 						</div>
+					</div>
 
-						<NoteFilter onSetFilter={onSetFilter} filterBy={filterBy} handleFromClick={handleFromClick} />
-					</section>
+					<NoteFilter onSetFilter={onSetFilter} filterBy={filterBy} />
+				</section>
 
-					<section className="menu-and-notes">
+				<section className="menu-and-notes">
 
-						<Menu
-							setShowFilterOption={setShowFilterOption}
-							isExpandedMenu={isExpandedMenu}
-							setIsExpandedMenu={setIsExpandedMenu}
-							handleTypeChange={handleTypeChange} />
-						<div>
-							{showFilterOption &&
-								<section className="search">
-									<FilterOptions setFilterBy={setFilterBy} filterBy={filterBy} handleTypeChange={handleTypeChange} />
-								</section>}
+					<Menu
+						isExpandedMenu={isExpandedMenu}
+						setIsExpandedMenu={setIsExpandedMenu}
+						handleTypeChange={handleTypeChange} />
 
-							<section className="new-note">
-								<div className="add-note-form collapsible-element" style={{ backgroundColor: bgColor }}>
+					<div>
+						<section className="new-note">
+							<div className="add-note-form collapsible-element" style={{ backgroundColor: bgColor }}>
+								<div className="info-area">
+									{isExpandedForm && <button
+										className={`pin-btn-adding-form ${(noteToAdd.isPinned ? 'pinned' : '')}`}
+										onClick={ev => { ev.stopPropagation(); onToggleIsPinned() }}>
+										<i className="fa-solid fa-thumbtack"></i>
+									</button>}
 
-									<div className="add-video-or-img">
-										{isExpandedForm && noteToAdd.info.imgUrl && renderImgOrVideo(<img src={noteToAdd.info.imgUrl} />, 'img')}
-										{isExpandedForm && noteToAdd.info.videoUrl && renderImgOrVideo(<iframe src={noteToAdd.info.videoUrl} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
-										</iframe>, 'video')}
-									</div>
+									<textarea
+										className="textarea-input"
+										name="noteTitle"
+										id="title"
+										placeholder={isExpandedForm ? 'Title' : 'New note...'}
+										value={noteToAdd.noteTitle || ''}
+										onChange={handleInfoChange}
+										onClick={() => setIsExpandedForm(true)}
+										style={{ backgroundColor: bgColor }} />
 
-									<div className="info-area">
-										{isExpandedForm && <button
-											className={`pin-btn-adding-form ${(noteToAdd.isPinned ? 'pinned' : '')}`}
-											onClick={(ev) => { ev.stopPropagation(); onToggleIsPinned() }}>
-											{noteToAdd.isPinned ? <img src="assets/img/pin-full.png" /> : <img src="assets/img/pin-empty.png" />}
-										</button>}
-
+									{isExpandedForm && <section className="expanded-form">
 										<textarea
 											className="textarea-input"
-											type="text"
-											name="noteTitle"
-											id="title"
-											placeholder={`${isExpandedForm ? 'Title' : 'New note...'}`}
-											value={noteToAdd.noteTitle}
+											name="txt"
+											id="txt"
+											placeholder="New note..."
+											value={noteToAdd.info.txt || ''}
 											onChange={handleInfoChange}
-											onClick={() => setIsExpandedForm(true)}
 											style={{ backgroundColor: bgColor }} />
 
-										{!isExpandedForm && <div className="actions-collapsed-form">
-											<div><img src="assets/img/check-box-icon.png"
-												onClick={(ev) => {
-													ev.stopPropagation()
-													setCmpType('NoteTodos')
-													setTodosCounter(prevCount => prevCount + 1);
-													setIsExpandedForm(true)
-												}} /></div>
-
-											<div><img src="assets/img/image-icon.png"
-												onClick={(ev) => {
-													ev.stopPropagation()
-													setCmpType('NoteImg')
-													setIsExpandedForm(true)
-												}} /></div>
-
-											<div><img src="assets/img/brush.png"
-												onClick={(ev) => {
-													ev.stopPropagation()
-													setCmpType('NoteDrawing')
-													setIsExpandedForm(true)
-													setIsDrawingModalOpen(true)
-												}} /></div>
-
-											<div><img src="assets/img/videocam-icon.png"
-												onClick={(ev) => {
-													ev.stopPropagation();
-													setCmpType('NoteVideo');
-													setIsExpandedForm(true)
-												}} /></div>
-										</div>}
-
-										{isExpandedForm && <section className="expanded-form">
-											<textarea
-												className="textarea-input"
-												type="text"
-												name="txt"
-												id="txt"
-												placeholder="New note..."
-												value={noteToAdd.info.txt || ''}
-												onChange={(ev) => { handleInfoChange(ev); handleChangeTextAreaDimensions(ev) }}
-												style={{ backgroundColor: bgColor }} />
-
-
-											<div className="actions">
-												<div className="actions-toolbar">
-													<button
-														title="Background color"
-														onClick={() => setIsNoteStyle(isNoteStyle => !isNoteStyle)}>
-														<i className="fa-solid fa-palette"></i>
-													</button>
-
-													<button
-														type='button'
-														title="Add image"
-														onClick={() => { setCmpType('NoteImg'); setTodosCounter(0) }}>
-														<i className="fa-solid fa-image"></i>
-													</button>
-
-													<button
-														type='button'
-														title="Add video"
-														onClick={() => { setCmpType('NoteVideo'); setTodosCounter(0) }}>
-														<i className="fa-solid fa-video">
-														</i></button>
-
-													<button
-														type='button'
-														title="Todo list"
-														onClick={() => { setCmpType('NoteTodos'); setTodosCounter(prevCount => prevCount + 1) }}>
-														<i className="fa-regular fa-square-check"></i>
-													</button>
-
-													<button
-														type='button'
-														title="Drawing"
-														onClick={() => { setCmpType('NoteDrawing'); setIsDrawingModalOpen(true) }}>
-														<i className="fa-solid fa-paintbrush"></i>
-													</button>
-
-													<button
-														type='button'
-														title="Tag"
-														onClick={() => { setCmpType('NoteTag') }}>
-														<i className="fa-solid fa-tag"></i>
-													</button>
-												</div>
-												{isNoteStyle && <ColorInput onSetNoteStyle={onSetNoteStyle} bgColor={bgColor} />}
-												<button className="save-new-note-btn" onClick={onSubmit}>Save</button>
+										<div className="actions">
+											<div className="actions-toolbar">
+												<button
+													type="button"
+													title="Background color"
+													onClick={() => setIsNoteStyle(prevValue => !prevValue)}>
+													<i className="fa-solid fa-palette"></i>
+												</button>
 											</div>
-
-										</section>
-										}
-									</div>
+											{isNoteStyle && <ColorPicker onSetStyle={onSetNoteStyle} />}
+											<button
+												className="save-new-note-btn"
+												onClick={() => onAddNote(noteToAdd)}>Save</button>
+										</div>
+									</section>}
 								</div>
+							</div>
 
-								<NotePreview
-									notes={notes}
-									onRemoveNote={onRemoveNote}
-									loadNotes={loadNotes}
-									onPinNote={onPinNote}
-									onDuplicateNote={onDuplicateNote}
-									// setNoteType={setNoteType}
-									setNotes={setNotes}
-								/>
+							<NotePreview
+								notes={notes}
+								onRemoveNote={onRemoveNote}
+								loadNotes={loadNotes}
+								onPinNote={onPinNote}
+								onDuplicateNote={onDuplicateNote}
+								setNotes={setNotes}
+							/>
 
-							</section>
-						</div>
-					</section>
-
+						</section>
+					</div>
 				</section>
-			</div>
-		)
-	}
+
+			</section>
+		</div>
+	)
 }

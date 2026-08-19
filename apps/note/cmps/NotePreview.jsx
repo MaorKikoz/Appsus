@@ -67,11 +67,13 @@ export function NotePreview({ notes, onRemoveNote, loadNotes, onPinNote, onDupli
             })
     }
 
-   //  function transferNoteToMailApp(note) {
-   //      const newMail = { ...mailService.getEmptyMail(), subject: note.noteTitle || '', body: note.info.txt || '', to: 'user@appsus.com', sentAt: new Date() }
-   //      mailService.save(newMail)
-   //      navigate(`/mail`)
-   //  }
+    function transferNoteToMailApp(note) {
+        const params = new URLSearchParams({
+            subject: note.noteTitle || '',
+            body: note.info.txt || '',
+        })
+        navigate(`/mail/compose?${params.toString()}`)
+    }
 
     return (
 
@@ -99,8 +101,10 @@ export function NotePreview({ notes, onRemoveNote, loadNotes, onPinNote, onDupli
                     transferNoteToMailApp={transferNoteToMailApp} />
             </section>
 
+            {/* TODO: re-enable once NoteEdit can load - it imports Modal.jsx, ColorInput.jsx,
+                NoteTag.jsx and the four CreateNoteBy*.jsx cmps, none of which exist yet.
             {isEditModalOpen && (
-                <Modal isOpen={isEditModalOpen} onCloseModal={onCloseModal} bgColor={noteToEdit.style.backgroundColor}>
+                <NoteModal isOpen={isEditModalOpen} onCloseModal={onCloseModal} bgColor={noteToEdit.style.backgroundColor}>
                     <NoteEdit
                         note={noteToEdit}
                         onCloseModal={onCloseModal}
@@ -110,8 +114,8 @@ export function NotePreview({ notes, onRemoveNote, loadNotes, onPinNote, onDupli
                         isOpen={isEditModalOpen}
                         transferNoteToMailApp={transferNoteToMailApp}
                     />
-                </Modal>
-            )}
+                </NoteModal>
+            )} */}
         </Fragment >
     )
 }

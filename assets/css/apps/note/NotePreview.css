@@ -88,7 +88,19 @@ ul.notes {
     border-radius: 50%;
 }
 
-.pin-btn img {
+.pin-btn i {
     width: 22px;
     margin: 0;
+}
+
+.pin-btn i,
+.pin-btn-adding-form i,
+.pin-btn-edit-modal i {
+    rotate: -45deg;
+}
+
+.pin-btn.pinned i,
+.pin-btn-adding-form.pinned i,
+.pin-btn-edit-modal.pinned i {
+    rotate: 0deg;
 }

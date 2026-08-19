@@ -21,7 +21,7 @@ export function NoteList({ notes, handleEditClick, onPinNote, onRemoveNote, onDu
                                 <button
                                     className={`pin-btn ${(note.info.imgUrl || note.info.videoUrl) ? 'absolute' : ''} ${(note.isPinned ? 'pinned' : '')}`}
                                     onClick={(ev) => { ev.stopPropagation(); onPinNote(note) }}>
-                                    {note.isPinned ? <img src="assets/img/pin-full.png" /> : <img src="assets/img/pin-empty.png" />}
+                                    <i className="fa-solid fa-thumbtack"></i>
                                 </button>
 
                                 {/* {note.noteTitle && <h3 className="preview-title"><LongTxt children={note.noteTitle} length={200} showButton={false} /></h3>} */}
@@ -51,7 +51,7 @@ export function NoteList({ notes, handleEditClick, onPinNote, onRemoveNote, onDu
                                 <button title="Delete Note" onClick={(ev) => { ev.stopPropagation(); onRemoveNote(note.id) }}><i className="fa-solid fa-trash"></i></button>
                                 <button title="Edit Note" onClick={(ev) => { ev.stopPropagation(); handleEditClick(note) }}><i className="fa-regular fa-pen-to-square"></i></button>
                                 <button title="Duplicate Note" onClick={(ev) => { ev.stopPropagation(); onDuplicateNote(note) }}><i className="fa-regular fa-clone"></i></button>
-                                {/* <button title="Send by email" onClick={(ev) => { ev.stopPropagation(); transferNoteToMailApp(note) }}><i className="fa-regular fa-envelope"></i></button> */}
+                                <button title="Send by email" onClick={(ev) => { ev.stopPropagation(); transferNoteToMailApp(note) }}><i className="fa-regular fa-envelope"></i></button>
                             </div>
                         </li>
                     )

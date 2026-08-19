@@ -2,9 +2,9 @@
 @import './NotePreview.css';
 @import './Modal.css';
 @import './NoteEdit.css';
-@import '.NoteFilter.css';
+@import './NoteFilter.css';
 @import './NoteList.css';
-@import './Menu.css';
+/* @import './Menu.css'; - file does not exist yet */
 /* @import './apps/note/cmps/FilterOptions.css';
 @import './apps/note/cmps/ColorInput.css'; */
  
@@ -39,3 +39,152 @@
 
      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
  }
+
+/* keep header + add-note form */
+.keep-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    width: 80vw;
+    max-width: 1300px;
+    padding-block: 10px;
+}
+
+.menu-and-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.keep-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.4rem;
+    color: #5f6368;
+}
+
+.note-bars-btn,
+.menu {
+    border: none;
+    background-color: transparent;
+    padding: 0.6em;
+    border-radius: 50%;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+.note-bars-btn:hover,
+.menu:hover {
+    background-color: whitesmoke;
+}
+
+.menu-notes {
+    list-style-type: none;
+    padding: 0;
+}
+
+.menu-notes li {
+    padding: 0.5em 1em;
+    border-radius: 0 2em 2em 0;
+    cursor: pointer;
+}
+
+.menu-notes li:hover {
+    background-color: whitesmoke;
+}
+
+.add-note-form {
+    width: 100%;
+    max-width: 36em;
+}
+
+.add-note-form .info-area {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.textarea-input {
+    resize: none;
+    border: none;
+    outline: none;
+    overflow: hidden;
+
+    padding: 0.9em 1em;
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+.add-note-form textarea[name="noteTitle"] {
+    font-size: 1.05rem;
+    font-weight: 500;
+}
+
+.pin-btn-adding-form {
+    position: absolute;
+    top: 4px;
+    right: 6px;
+
+    border: none;
+    background-color: transparent;
+    padding: 0.6em;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.add-note-form .actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 0.3em 1em 0.8em;
+}
+
+.actions-toolbar button {
+    border: none;
+    background-color: transparent;
+    padding: 0.5em;
+    border-radius: 50%;
+    color: #5f6368;
+    cursor: pointer;
+}
+
+.actions-toolbar button:hover {
+    background-color: rgba(0, 0, 0, 0.08);
+}
+
+.save-new-note-btn {
+    margin-inline-start: auto;
+    border: none;
+    background-color: transparent;
+    padding: 0.6em 1.2em;
+    border-radius: 0.3em;
+    font-family: inherit;
+    font-size: 0.95rem;
+    cursor: pointer;
+}
+
+.save-new-note-btn:hover {
+    background-color: rgba(0, 0, 0, 0.08);
+}
+
+/* ColorPicker.jsx - swatches have no intrinsic size without this */
+.color-picker {
+    display: flex;
+    gap: 8px;
+}
+
+.color-block {
+    width: 26px;
+    height: 26px;
+
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.color-block:hover {
+    border-color: #41431B;
+}

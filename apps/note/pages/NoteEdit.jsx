@@ -1,4 +1,4 @@
-const { useEffect, useState } = React
+const { useEffect, useState, useRef } = React
 const { Link, useParams, useNavigate } = ReactRouterDOM
 
 import { Modal } from "../cmps/Modal.jsx"
@@ -11,7 +11,6 @@ import { showErrorMsg, showSuccessMsg } from "../../../services/event-bus.servic
 import { CreateNoteByDrawing } from "../../note/cmps/CreateNoteByDrawing.jsx"
 import { NoteTag } from "../../note/cmps/NoteTag.jsx"
 
-const { useState, useEffect, useRef } = React
 
 export function NoteEdit({ note, onCloseModal, setNotes, setNoteType, isOpen, transferNoteToMailApp }) {
 
@@ -197,7 +196,7 @@ export function NoteEdit({ note, onCloseModal, setNotes, setNoteType, isOpen, tr
                     <button
                         className={`pin-btn-edit-modal ${(noteToEdit.isPinned ? 'pinned' : '')}`}
                         onClick={(ev) => { ev.stopPropagation(); onToggleIsPinned() }}>
-                        {noteToEdit.isPinned ? <img src="assets/img/pin-full.png" /> : <img src="assets/img/pin-empty.png" />}
+                        <i className="fa-solid fa-thumbtack"></i>
                     </button>
 
                     <textarea
