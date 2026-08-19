@@ -1,1 +1,41 @@
- /* note index */
+
+@import './NotePreview.css';
+@import './Modal.css';
+@import './NoteEdit.css';
+@import '.NoteFilter.css';
+@import './NoteList.css';
+@import './Menu.css';
+/* @import './apps/note/cmps/FilterOptions.css';
+@import './apps/note/cmps/ColorInput.css'; */
+ 
+ * {
+     box-sizing: border-box;
+ }
+
+ .main-note {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+
+     margin-block-start: 10px;
+ }
+
+ .new-note {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+
+     gap: 60px;
+     margin-block-start: 25px;
+ }
+
+ .add-note-form {
+     display: flex;
+     flex-direction: column;
+     position: relative;
+
+     border: 1px solid lightgray;
+     border-radius: 0.6em;
+
+     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+ }
