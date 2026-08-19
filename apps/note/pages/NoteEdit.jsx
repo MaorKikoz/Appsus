@@ -1,15 +1,13 @@
 const { useEffect, useState, useRef } = React
 const { Link, useParams, useNavigate } = ReactRouterDOM
 
-import { Modal } from "../cmps/Modal.jsx"
+import { NoteModal } from '../cmps/NoteModal.jsx'
 import { noteService } from '../services/note.service.js'
 import { CreateNoteByImg } from '../cmps/CreateNoteByImg.jsx'
 import { CreateNoteByVideo } from '../cmps/CreateNoteByVideo.jsx'
 import { CreateNoteByTodos } from '../cmps/CreateNoteByTodos.jsx'
 import { ColorInput } from '../cmps/ColorInput.jsx'
 import { showErrorMsg, showSuccessMsg } from "../../../services/event-bus.service.js"
-import { CreateNoteByDrawing } from "../../note/cmps/CreateNoteByDrawing.jsx"
-import { NoteTag } from "../../note/cmps/NoteTag.jsx"
 
 
 export function NoteEdit({ note, onCloseModal, setNotes, setNoteType, isOpen, transferNoteToMailApp }) {
@@ -234,8 +232,8 @@ export function NoteEdit({ note, onCloseModal, setNotes, setNoteType, isOpen, tr
                         handleInfoChangeForTodos={handleInfoChangeForTodos}
                         setTodosCounter={setTodosCounter}
                         isAddingNote={false}
-                        isDrawingModalOpen={isDrawingModalOpen}
-                        closeDrawingModal={closeDrawingModal}
+                        // isDrawingModalOpen={isDrawingModalOpen}
+                        // closeDrawingModal={closeDrawingModal}
                         setNoteToEdit={setNoteToEdit}
                     />
 
