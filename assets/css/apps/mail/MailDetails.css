@@ -1,0 +1,68 @@
+ /* mail details */
+
+.mail-details {
+    max-width: 60em;
+    margin: 1em auto;
+    padding: 1.5em;
+    background-color: var(--bg-panel);
+    border-radius: .75em;
+    box-shadow: var(--shadow-1);
+}
+
+.mail-details h2 {
+    margin-block-end: .75em;
+    font-size: 1.4rem;
+    font-weight: 400;
+}
+
+.mail-details .mail-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+    padding-block-end: 1em;
+    border-block-end: 1px solid var(--border);
+    font-size: .9em;
+    color: var(--gray1);
+}
+
+/* pre-wrap keeps the line breaks the composer typed */
+.mail-details .long-txt .txt {
+    padding-block: 1.5em;
+    line-height: 1.6;
+    white-space: pre-wrap;
+}
+
+.mail-details .label-picker {
+    padding-block-start: 1em;
+}
+
+.mail-details .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5em;
+    padding-block-start: 1em;
+    border-block-start: 1px solid var(--border);
+}
+
+.mail-details .actions button {
+    padding: .5em 1.2em;
+    border: 1px solid var(--border);
+    border-radius: 2em;
+    background-color: var(--bg-panel);
+    font: inherit;
+    cursor: pointer;
+}
+
+.mail-details .actions button:hover {
+    background-color: var(--bg-hover);
+}
+
+.mail-details .btn-remove:hover {
+    border-color: var(--clr-accent);
+    color: var(--clr-accent);
+}
+
+.mail-details .btn-keep:hover {
+    border-color: var(--clr-link);
+    color: var(--clr-link);
+}

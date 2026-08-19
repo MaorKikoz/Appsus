@@ -1,0 +1,20 @@
+ /* long txt - shared cmp. its markup is
+    <section class="long-txt"><p class="txt">..</p><div><button class="show-txt-btn">..</button></div></section>
+
+    only the button is styled here. the paragraph is left alone on purpose:
+    missKeep renders LongTxt inside note previews with showButton={false},
+    and each app wants its own text treatment */
+
+.long-txt .show-txt-btn {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--clr-link);
+    font: inherit;
+    font-size: .9em;
+    cursor: pointer;
+}
+
+.long-txt .show-txt-btn:hover {
+    text-decoration: underline;
+}

@@ -1,33 +1,80 @@
  /* home */
 
 .home {
-    background-color: var(--bg2);
+    max-width: 60em;
+    margin-inline: auto;
+    padding: 2em 1em;
 }
 
-.home .box-container {
-    padding: 1em 0;
+.home .hero {
+    padding-block: 2em 3em;
+    text-align: center;
 }
 
-.home .box1 {
-    background-color: var(--color1);
-    min-height: 10em;
+.home .hero h1 {
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    font-weight: 400;
+    text-wrap: balance;
 }
 
-.home .box2 {
-    background-color: var(--color2);
-    min-height: 10em;
+.home .hero p {
+    margin-block-start: .75em;
+    color: var(--gray1);
 }
 
- @media (min-width: 750px) {
-    .home .box-container {
-        display: flex;
-        flex-direction: row-reverse;
+.home .app-cards {
+    display: grid;
+    gap: 1.5em;
+}
+
+.home .app-card {
+    display: grid;
+    gap: .5em;
+    align-content: start;
+
+    padding: 2em;
+    border-radius: 1em;
+    background-color: var(--bg-panel);
+    box-shadow: var(--shadow-1);
+    transition: box-shadow .2s, transform .2s;
+}
+
+.home .app-card:hover {
+    box-shadow: var(--shadow-2);
+    transform: translateY(-2px);
+}
+
+.home .card-icon {
+    font-size: 2rem;
+}
+
+.home .mail-card .card-icon {
+    color: var(--clr-accent);
+}
+
+.home .app-card p {
+    margin: 0;
+    color: var(--gray1);
+}
+
+.home .card-cta {
+    padding-block-start: .5em;
+    color: var(--clr-link);
+    font-weight: 500;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .home .app-card {
+        transition: none;
     }
-    .home .box1 {
-        flex: 1
+
+    .home .app-card:hover {
+        transform: none;
     }
-    .home .box2 {
-        width: 30vw;
+}
+
+@media (min-width: 750px) {
+    .home .app-cards {
+        grid-template-columns: 1fr 1fr;
     }
-    
 }

@@ -1,13 +1,26 @@
 :root {
-    --bg1: lightblue;
-    --bg2: rgb(50, 160, 204);
-    --bg3: rgb(89, 134, 206);
-    
-    --color1: rgb(26, 115, 232);
-    --color2: rgb(24, 128, 56);
-    --color3: rgb(197, 34, 31);
+    /* surfaces */
+    --bg-app: #f6f8fc;
+    --bg-panel: #ffffff;
+    --bg-hover: #f2f6fc;
+    --bg-chip: #d3e3fd;
 
-    --gray2: #aaa;
-    --gray2: #888;
-    --gray2: #333;
+    /* accents */
+    --clr-accent: #c5221f;
+    --clr-link: #0b57d0;
+    --clr-star: #f4b400;
+    --clr-success: #188038;
+
+    /* text */
+    --gray1: #5f6368;
+    --gray2: #80868b;
+    --gray3: #202124;
+
+    --border: #e0e0e0;
+
+    --shadow-1: 0 1px 2px rgba(60, 64, 67, .3), 0 1px 3px 1px rgba(60, 64, 67, .15);
+    --shadow-2: 0 8px 10px 1px rgba(60, 64, 67, .15), 0 3px 14px 2px rgba(60, 64, 67, .11);
+
+    --header-height: 4rem;
+    --sidebar-width: 16rem;
 }

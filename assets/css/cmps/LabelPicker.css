@@ -1,0 +1,60 @@
+ /* label chips - shared by the picker and by the read-only chips in MailPreview */
+
+.label-picker {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .3em;
+}
+
+.label-chip {
+    padding: .15em .6em;
+    border: 1px solid transparent;
+    border-radius: 1em;
+    background-color: var(--gray1);
+    color: white;
+    font: inherit;
+    font-size: .75em;
+    line-height: 1.7;
+    text-transform: capitalize;
+}
+
+/* only the picker's chips are clickable - the preview renders plain spans */
+.label-picker .label-chip {
+    cursor: pointer;
+    opacity: .45;
+}
+
+.label-picker .label-chip:hover {
+    opacity: .75;
+}
+
+.label-picker .label-chip.is-selected {
+    border-color: currentColor;
+    font-weight: bold;
+    opacity: 1;
+}
+
+.label-work {
+    background-color: #d3e3fd;
+    color: #041e49;
+}
+
+.label-family {
+    background-color: #d7ead4;
+    color: #072711;
+}
+
+.label-important {
+    background-color: #fdd9d7;
+    color: #5c1613;
+}
+
+.label-spam {
+    background-color: #e8eaed;
+    color: #3c4043;
+}
+
+.label-romantic {
+    background-color: #fce8f4;
+    color: #5c1345;
+}

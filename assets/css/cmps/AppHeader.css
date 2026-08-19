@@ -1,16 +1,60 @@
+ /* app header - appsus level chrome, shared by both apps.
+    every selector is scoped: the old bare `nav a` rules were leaking into
+    MailDetails, whose actions bar is also a <nav> */
+
 .app-header {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 20;
+
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    padding: 1em;
-    background: var(--bg1);
+    gap: 1em;
+
+    height: var(--header-height);
+    padding-inline: 1em;
+
+    background-color: var(--bg-panel);
+    box-shadow: var(--shadow-1);
 }
 
-nav a {
-    margin: .5em;
+.app-header .app-logo {
+    display: flex;
+    align-items: center;
+    gap: .5em;
 }
 
-nav a.active {
-    color: var(--color1);
-    font-weight: bold;
-    text-decoration: overline;
+.app-header .logo-mark {
+    font-size: 1.4rem;
+    color: var(--clr-accent);
+}
+
+.app-header h1 {
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: var(--gray1);
+}
+
+.app-header .app-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .25em;
+}
+
+.app-header .app-nav a {
+    padding: .5em 1em;
+    border-radius: 2em;
+    color: var(--gray1);
+    font-size: .95rem;
+}
+
+.app-header .app-nav a:hover {
+    background-color: var(--bg-hover);
+}
+
+.app-header .app-nav a.active {
+    background-color: var(--bg-chip);
+    color: #041e49;
+    font-weight: 500;
 }

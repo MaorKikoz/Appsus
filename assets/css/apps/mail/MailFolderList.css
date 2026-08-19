@@ -1,0 +1,62 @@
+ /* mail folder list - mobile: a scrollable row of chips. desktop: a sidebar */
+
+.mail-folder-list ul {
+    display: flex;
+    gap: .25em;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow-x: auto;
+}
+
+.mail-folder-list .btn-folder {
+    display: flex;
+    align-items: center;
+    gap: .75em;
+    width: 100%;
+
+    padding: .6em 1em;
+    border: 0;
+    border-radius: 2em;
+
+    background: none;
+    color: var(--gray3);
+    font: inherit;
+    font-size: .95rem;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.mail-folder-list .btn-folder:hover {
+    background-color: var(--bg-hover);
+}
+
+.mail-folder-list .btn-folder.active {
+    background-color: var(--bg-chip);
+    color: #041e49;
+    font-weight: 500;
+}
+
+.mail-folder-list .folder-icon {
+    font-size: .9em;
+}
+
+.mail-folder-list .folder-count {
+    margin-inline-start: auto;
+    font-size: .8em;
+    font-weight: 500;
+}
+
+@media (min-width: 750px) {
+    .mail-folder-list ul {
+        display: grid;
+        gap: .25em;
+        overflow-x: visible;
+    }
+
+    /* gmail's half pill, flush with the left edge of the viewport */
+    .mail-folder-list .btn-folder {
+        border-radius: 0 2em 2em 0;
+        padding-inline: 1.5em .8em;
+    }
+}

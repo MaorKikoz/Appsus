@@ -1,5 +1,12 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
+    background-color: var(--bg-app);
+    color: var(--gray3);
+    font-family: 'Roboto', system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
 
 h1,
@@ -9,6 +16,7 @@ h4,
 h5,
 h6 {
     margin: 0;
+    font-weight: 500;
 }
 
 a {

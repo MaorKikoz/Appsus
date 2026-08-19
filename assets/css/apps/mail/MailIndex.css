@@ -1,1 +1,76 @@
- /* mail index  */
+ /* mail index */
+
+.mail-index {
+    display: grid;
+    gap: 1em;
+    padding: 1em;
+}
+
+.mail-index .mail-sidebar {
+    display: grid;
+    gap: 1em;
+    align-content: start;
+}
+
+.mail-index .btn-compose {
+    display: flex;
+    align-items: center;
+    gap: .75em;
+    justify-self: start;
+
+    padding: .9em 1.5em;
+    border: 0;
+    border-radius: 1em;
+
+    background-color: var(--bg-chip);
+    color: #041e49;
+    font: inherit;
+    font-size: .95rem;
+    cursor: pointer;
+    box-shadow: var(--shadow-1);
+}
+
+.mail-index .btn-compose:hover {
+    box-shadow: var(--shadow-2);
+}
+
+/* min-width keeps long subjects ellipsizing instead of stretching the grid */
+.mail-index .mail-main {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+
+    background-color: var(--bg-panel);
+    border-radius: .75em;
+    overflow: hidden;
+}
+
+.loader {
+    padding: 2em;
+    text-align: center;
+    color: var(--gray1);
+}
+
+@media (min-width: 750px) {
+    .mail-index {
+        grid-template-columns: var(--sidebar-width) 1fr;
+        align-items: start;
+        height: calc(100vh - var(--header-height));
+        padding-inline-start: 0;
+    }
+
+    .mail-index .mail-sidebar,
+    .mail-index .mail-main {
+        height: 100%;
+    }
+
+    .mail-index .btn-compose {
+        margin-inline-start: 1em;
+    }
+
+    /* only the list scrolls - the filter bar stays put, like gmail */
+    .mail-index .mail-list {
+        flex: 1;
+        overflow-y: auto;
+    }
+}

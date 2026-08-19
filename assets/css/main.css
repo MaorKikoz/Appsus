@@ -4,10 +4,19 @@
 @import './basics/helpers.css';
 @import './basics/layout.css';
 
-@import './cmps/home.css';
+@import './cmps/Home.css';
+@import './cmps/About.css';
 @import './cmps/UserMsg.css';
 @import './cmps/AppHeader.css';
+@import './cmps/LongTxt.css';
+@import './cmps/LabelPicker.css';
 
 @import './apps/note/NoteIndex.css';
+
 @import './apps/mail/MailIndex.css';
 @import './apps/mail/MailList.css';
+@import './apps/mail/MailPreview.css';
+@import './apps/mail/MailFilter.css';
+@import './apps/mail/MailFolderList.css';
+@import './apps/mail/MailDetails.css';
+@import './apps/mail/MailCompose.css';

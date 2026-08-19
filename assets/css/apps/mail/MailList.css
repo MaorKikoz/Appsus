@@ -1,1 +1,91 @@
  /* mail list */
+
+.mail-list ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.mail-list li {
+    display: flex;
+    align-items: center;
+    gap: .5em;
+
+    padding: .4em .75em;
+    border-block-end: 1px solid var(--border);
+}
+
+.mail-list li:hover {
+    box-shadow: var(--shadow-1);
+    /* lifts the row's shadow above its neighbours */
+    position: relative;
+    z-index: 1;
+}
+
+.mail-list li.is-unread {
+    background-color: var(--bg-panel);
+    font-weight: 700;
+}
+
+.mail-list li.is-read {
+    background-color: var(--bg-app);
+    color: var(--gray1);
+}
+
+/* the link wraps MailPreview - min-width lets its text ellipsize */
+.mail-list li a {
+    flex: 1;
+    min-width: 0;
+}
+
+.mail-list button {
+    padding: .2em .4em;
+    border: 0;
+    border-radius: 50%;
+    background: none;
+    font: inherit;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.mail-list button:hover {
+    background-color: var(--bg-chip);
+}
+
+.mail-list .btn-star {
+    color: var(--clr-star);
+    font-size: 1.1em;
+}
+
+.mail-list-empty {
+    padding: 2em 1em;
+    text-align: center;
+    color: var(--gray1);
+}
+
+/* gmail swaps the date for the row actions on hover - css only, no state.
+   :focus-within keeps the buttons reachable by keyboard */
+@media (min-width: 750px) {
+    .mail-list li .actions {
+        display: none;
+    }
+
+    .mail-list li:hover .actions,
+    .mail-list li:focus-within .actions {
+        display: flex;
+        gap: .25em;
+    }
+
+    .mail-list li:hover .mail-date,
+    .mail-list li:focus-within .mail-date {
+        visibility: hidden;
+    }
+}
+
+@media (max-width: 749px) {
+    /* no hover on touch - the actions stay put */
+    .mail-list li .actions {
+        display: flex;
+        gap: .25em;
+    }
+}

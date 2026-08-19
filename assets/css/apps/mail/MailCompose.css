@@ -1,0 +1,119 @@
+ /* mail compose - a corner card floating over the still-visible list.
+    the compose routes are nested under /mail with an <Outlet /> in MailIndex,
+    so the list stays mounted underneath */
+
+.mail-compose {
+    position: fixed;
+    inset-block-end: 0;
+    inset-inline-end: 2em;
+    z-index: 10;
+
+    display: grid;
+    align-content: start;
+    gap: .5em;
+
+    width: min(90vw, 30em);
+    max-height: 90vh;
+    padding: 0 1em 1em;
+    overflow-y: auto;
+
+    background-color: var(--bg-panel);
+    border-radius: .75em .75em 0 0;
+    box-shadow: var(--shadow-2);
+}
+
+.mail-compose h2 {
+    position: sticky;
+    inset-block-start: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-inline: -1rem;
+    padding: .8em 1em;
+    border-radius: .75em .75em 0 0;
+
+    background-color: var(--gray3);
+    color: white;
+    font-size: .95rem;
+    font-weight: 500;
+}
+
+.mail-compose .btn-close {
+    padding: 0 .3em;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+}
+
+.mail-compose label {
+    font-size: .9em;
+    color: var(--gray1);
+}
+
+.mail-compose input,
+.mail-compose textarea {
+    padding: .5em;
+    border: 0;
+    border-block-end: 1px solid var(--border);
+    font: inherit;
+}
+
+.mail-compose input:focus,
+.mail-compose textarea:focus {
+    outline: 0;
+    border-block-end-color: var(--clr-link);
+}
+
+.mail-compose textarea {
+    resize: vertical;
+}
+
+.mail-compose .draft-status {
+    font-size: .85em;
+    color: var(--gray1);
+}
+
+.mail-compose .actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .5em;
+    padding-block-start: .5em;
+}
+
+.mail-compose .actions button {
+    padding: .5em 1.2em;
+    border: 1px solid var(--border);
+    border-radius: 2em;
+    background-color: var(--bg-panel);
+    font: inherit;
+    cursor: pointer;
+}
+
+.mail-compose .actions button:hover {
+    background-color: var(--bg-hover);
+}
+
+.mail-compose .btn-send {
+    border-color: var(--clr-link);
+    background-color: var(--clr-link);
+    color: white;
+}
+
+.mail-compose .btn-send:hover {
+    background-color: #0842a0;
+}
+
+/* full screen on phones - a corner card has nowhere to sit */
+@media (max-width: 749px) {
+    .mail-compose {
+        inset: 0;
+        width: 100%;
+        max-height: none;
+        border-radius: 0;
+    }
+}

@@ -1,0 +1,38 @@
+ /* about */
+
+.about {
+    max-width: 45em;
+    margin-inline: auto;
+    padding: 2em 1em;
+    line-height: 1.6;
+}
+
+.about h1 {
+    font-size: 2rem;
+    font-weight: 400;
+    padding-block-end: .5em;
+}
+
+.about h2 {
+    font-size: 1.1rem;
+    padding-block: 1.5em .5em;
+}
+
+.about p {
+    margin: 0;
+    color: var(--gray1);
+}
+
+.about ul {
+    margin: 0;
+    padding-inline-start: 1.2em;
+    color: var(--gray1);
+}
+
+.about li {
+    padding-block-end: .4em;
+}
+
+.about strong {
+    color: var(--gray3);
+}

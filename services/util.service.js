@@ -3,6 +3,7 @@ export const utilService = {
     makeLorem,
     getRandomIntInclusive,
     getRandomColor,
+    getAvatarColor,
     padNum,
     getDayName,
     getMonthName,
@@ -48,6 +49,16 @@ function getRandomIntInclusive(min, max) {
 
 function padNum(num) {
     return (num > 9) ? num + '' : '0' + num
+}
+
+// stable per string, unlike getRandomColor - avatars must not change colour
+// on every keystroke in the search box
+function getAvatarColor(str = '') {
+    let hash = 0
+    for (let i = 0; i < str.length; i++) {
+        hash = str.charCodeAt(i) + ((hash << 5) - hash)
+    }
+    return `hsl(${Math.abs(hash) % 360}, 45%, 45%)`
 }
 
 function getRandomColor() {
