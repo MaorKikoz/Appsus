@@ -1,0 +1,21 @@
+.book-edit form {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1em;
+
+    width: 50vw;
+    padding: 1em;
+    background-color: var(--clr2);
+    margin: 100px auto;
+
+    color: var(--gray1)
+}
+
+.book-edit input {
+    grid-column: 2;
+}
+
+.actions {
+    grid-column: 2;
+    justify-self: end;
+}

@@ -1,0 +1,21 @@
+.about nav {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    justify-content: center;
+
+    margin-block-start: 4em;
+}
+.about-team, .about-product {
+    width: 30vw;
+    padding: 1em;
+    margin: 100px auto;
+}
+
+.about-product {
+    background-color: lightgoldenrodyellow;
+}
+
+.about-team {
+    background-color: lightsteelblue;
+}

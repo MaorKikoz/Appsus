@@ -13,6 +13,9 @@
 
 @import './apps/note/NoteIndex.css';
 
+@import './apps/book/style/cmps/BookIndex.css';
+@import './apps/book/imgs/';
+
 @import './apps/mail/MailIndex.css';
 @import './apps/mail/MailList.css';
 @import './apps/mail/MailPreview.css';

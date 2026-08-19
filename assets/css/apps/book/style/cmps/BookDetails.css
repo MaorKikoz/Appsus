@@ -1,0 +1,59 @@
+.book-details header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.book-details header > * {
+    margin: 0;
+}
+
+.book-details h1 {
+    padding-block-end: 0px;
+	margin-block-end: 0px;
+
+	color: var(--clr1);
+	font-size: 2em;
+	text-transform: uppercase;
+}
+
+.book-details h2 {
+	margin-block-start: 0px;
+}
+
+.book-details img {
+	max-width: 200px;
+	display: block;
+	margin: auto;
+}
+
+.book-details .actions {
+    display: flex;
+}
+
+.categories {
+    display: flex;
+    gap: .6em;
+    list-style: none;
+    padding: 0;
+}
+
+.categories li {
+    padding: .1em .5em;
+    background-color: var(--gray2);
+    border-radius: .4em;
+    color: var(--gray1);
+}
+
+h1 {
+	margin: 0px;
+	padding: 0px;
+}
+
+.red {
+	color: red;
+}
+
+.green {
+	color: forestgreen;
+}

@@ -1,0 +1,9 @@
+.add-review {
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-column: span 4;
+    align-items: center;
+
+    padding-inline: 10px;
+	background-color: rgba(81, 81, 81, 0.218);
+}

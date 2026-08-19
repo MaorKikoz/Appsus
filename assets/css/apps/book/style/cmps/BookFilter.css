@@ -1,0 +1,9 @@
+.book-filter {
+	background-color: var(--clr2bg);
+}
+
+.book-filter form {
+	display: flex;
+    gap: 1em;
+    padding-block: 0.5em;
+}

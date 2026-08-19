@@ -9,6 +9,7 @@ import { MailIndex } from './apps/mail/pages/MailIndex.jsx'
 import { MailDetails } from './apps/mail/pages/MailDetails.jsx'
 import { MailCompose } from './apps/mail/pages/MailCompose.jsx'
 import { NoteIndex } from './apps/note/pages/NoteIndex.jsx'
+import { BookIndex } from './apps/book/pages/BookIndex.jsx'
 
 export function RootCmp() {
     return <Router>
@@ -28,6 +29,7 @@ export function RootCmp() {
 
                 {/* note - maor */}
                 <Route path="/note" element={<NoteIndex />} />
+                <Route path="/book" element={<BookIndex/>} />
             </Routes>
             <UserMsg />
         </section>
