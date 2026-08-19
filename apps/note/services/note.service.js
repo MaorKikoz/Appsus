@@ -19,43 +19,113 @@ function _createNotes() {
     let notes = utilService.loadFromStorage(NOTE_KEY)
     if (!notes || !notes.length) {
         notes = [
-    {
-        id: 'n101',
-        createdAt: 1112222,
-        type: 'NoteTxt',
-        isPinned: true,
-        style: { backgroundColor: '#00d' },
-        info: { txt: 'Fullstack Me Baby!' }
-    }, {
-        id: 'n102',
-        createdAt: 1112223,
-        type: 'NoteImg',
-        isPinned: false,
-        style: { backgroundColor: '#0d0' },
-        info: {
-            url: 'http://some-img/me',
-            title: 'Bobi and Me'
-        }
-    }, {
-        id: 'n103',
-        createdAt: 1112224,
-        type: 'NoteTodos',
-        isPinned: false,
-        style: { backgroundColor: '#d00' },
-        info: {
-            title: 'Get my stuff together',
-            todos: [{
-                txt: 'Driving license',
-                isDone: true
-            },
-            {
-                txt: 'Coding power',
-                isDone: false
-            }
-            ]
-        }
-    }
-]
+            _createNote(
+                'n101',
+                1112222,
+                'NoteTxt',
+                true,
+                { backgroundColor: '#00d' },
+                { txt: 'Fullstack Me Baby!' }
+            ), _createNote(
+                'n102',
+                1112223,
+                'NoteImg',
+                false,
+                { backgroundColor: '#0d0' },
+                {
+                    url: 'http://some-img/me',
+                    title: 'Bobi and Me'
+                }
+            ), _createNote(
+                'n103',
+                1112224,
+                'NoteTodos',
+                false,
+                { backgroundColor: '#d00' },
+                {
+                    title: 'Get my stuff together',
+                    todos: [{
+                        txt: 'Driving license',
+                        isDone: true
+                    },
+                    {
+                        txt: 'Coding power',
+                        isDone: false
+                    }
+                    ]
+                }
+            ), _createNote(
+                'n104',
+                1112225,
+                'NoteTxt',
+                true,
+                { backgroundColor: '#00d' },
+                { txt: 'Fullstack Me Baby!' }
+            ), _createNote(
+                'n105',
+                1112226,
+                'NoteImg',
+                false,
+                { backgroundColor: '#0d0' },
+                {
+                    url: 'http://some-img/me',
+                    title: 'Bobi and Me'
+                }
+            ), _createNote(
+                'n106',
+                1112227,
+                'NoteTodos',
+                false,
+                { backgroundColor: '#d00' },
+                {
+                    title: 'Get my stuff together',
+                    todos: [{
+                        txt: 'Driving license',
+                        isDone: true
+                    },
+                    {
+                        txt: 'Coding power',
+                        isDone: false
+                    }
+                    ]
+                }
+            ), _createNote(
+                'n107',
+                1112228,
+                'NoteTxt',
+                true,
+                { backgroundColor: '#00d' },
+                { txt: 'Fullstack Me Baby!' }
+            ), _createNote(
+                'n108',
+                1112229,
+                'NoteImg',
+                false,
+                { backgroundColor: '#0d0' },
+                {
+                    url: 'http://some-img/me',
+                    title: 'Bobi and Me'
+                }
+            ), _createNote(
+                'n109',
+                1112230,
+                'NoteTodos',
+                false,
+                { backgroundColor: '#d00' },
+                {
+                    title: 'Get my stuff together',
+                    todos: [{
+                        txt: 'Driving license',
+                        isDone: true
+                    },
+                    {
+                        txt: 'Coding power',
+                        isDone: false
+                    }
+                    ]
+                }
+            )
+        ]
         utilService.saveToStorage(NOTE_KEY, notes)
     }
 }
@@ -90,22 +160,51 @@ function remove(noteId) {
     return storageService.remove(NOTE_KEY, noteId)
 }
 
-function save(note) {
+function save(note, isPinned = false) {
     if (note.id) {
-        return storageService.put(NOTE_KEY, note)
+        return storageService.put(NOTE_KEY, note, isPinned)
     } else {
         return storageService.post(NOTE_KEY, note)
     }
 }
 
-function getEmptyNote(type = 'NoteTxt') {
+function getEmptyNote(
+    id = utilService.makeId(),
+    createdAt = Date.now(),
+    type = ['NoteTxt'],
+    isPinned = false,
+    style = {
+        backgroundColor: '#ffffff'
+    },
+    info = { txt: '' }) {
+    console.log(`${id}`)
     return {
+        id,
+        createdAt,
         type,
-        createdAt: Date.now(),
-        isPinned: false,
-        style: { backgroundColor: '#ffffff' },
-        info: _getEmptyInfo(type)
+        isPinned,
+        style,
+        info
     }
+
+}
+
+function _createNote(
+    id,
+    createdAt,
+    type,
+    isPinned,
+    style,
+    info) {
+    const note = getEmptyNote(
+        id,
+        createdAt,
+        type,
+        isPinned,
+        style,
+        info)
+    note.id = utilService.makeId()
+    return note
 }
 
 function getDefaultFilter() {
@@ -133,6 +232,7 @@ function _getEmptyInfo(type) {
     }
 }
 
+
 // The three note types keep their text in different places
 function _getSearchableTxt(note) {
     const { info = {} } = note
@@ -158,5 +258,6 @@ function _setNextPrevNoteId(note) {
         return note
     })
 }
+
 
 window.ms = noteService

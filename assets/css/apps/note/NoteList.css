@@ -1,1 +1,29 @@
  /* note list */
+* {
+     box-sizing: border-box;
+ }
+
+ .todo-list-preview {
+     display: flex;
+     flex-direction: column;
+     grid-column: 1/-1;
+     padding-left: 0.5em;
+     padding-right: 0.5em;
+     padding-bottom: 0.1em;
+ }
+
+ .todo-text {
+     padding-left: 0.5em;
+     font-size: 0.9rem;
+ }
+
+ .checkbox-label-preview {
+     display: flex;
+     align-items: start;
+     width: max-content;
+     max-width: 14em;
+ }
+
+ .padding {
+     padding-top: 1em;
+ }
