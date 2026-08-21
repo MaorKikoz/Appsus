@@ -17,14 +17,14 @@ export function NoteList({ notes, handleEditClick, onPinNote, onRemoveNote, onDu
                                 </iframe>}
                             {note.info.drawingUrl && <img src={note.info.drawingUrl} />}
 
-                            <div className={`title-and-info-content ${(note.info.imgUrl || note.info.videoUrl) ? 'absolute' : ''}`}>
+                            <div className={`title-and-info-content ${(note.info.imgUrl || note.info.videoUrl || note.info.drawingUrl) ? 'absolute' : ''}`}>
                                 <button
-                                    className={`pin-btn ${(note.info.imgUrl || note.info.videoUrl) ? 'absolute' : ''} ${(note.isPinned ? 'pinned' : '')}`}
+                                    className={`pin-btn ${(note.info.imgUrl || note.info.videoUrl || note.info.drawingUrl) ? 'absolute' : ''} ${(note.isPinned ? 'pinned' : '')}`}
                                     onClick={(ev) => { ev.stopPropagation(); onPinNote(note) }}>
                                     <i className="fa-solid fa-thumbtack"></i>
                                 </button>
 
-                                {/* {note.noteTitle && <h3 className="preview-title"><LongTxt children={note.noteTitle} length={200} showButton={false} /></h3>} */}
+                                {note.noteTitle && <h3 className="preview-title"><LongTxt children={note.noteTitle} length={200} showButton={false} /></h3>}
                                 {note.info.txt && <section className={`${!note.noteTitle ? 'padding' : ''}`}><LongTxt children={note.info.txt} length={300} showButton={false} /></section>}
 
                                 {note.info.todos &&
@@ -40,12 +40,7 @@ export function NoteList({ notes, handleEditClick, onPinNote, onRemoveNote, onDu
                                             </label>)}
                                     </div>}
                             </div>
-                            {note.labels && note.labels.length !== 0 &&
-                                <div className="tag-list">
-                                    {note.labels.map((tag, i) =>
-                                        tag &&
-                                        <span className="tag" key={i}>{tag}</span>)}
-                                </div>}
+
 
                             <div className="toolbar">
                                 <button title="Delete Note" onClick={(ev) => { ev.stopPropagation(); onRemoveNote(note.id) }}><i className="fa-solid fa-trash"></i></button>

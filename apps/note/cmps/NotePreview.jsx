@@ -1,4 +1,4 @@
-// import { NoteEdit } from '../cmps/NoteEdit.jsx'
+import { NoteEdit } from '../pages/NoteEdit.jsx'
 import { NoteModal } from './NoteModal.jsx'
 import { noteService } from '../services/note.service.js'
 import { NoteList } from '../cmps/NoteList.jsx'
@@ -101,8 +101,7 @@ export function NotePreview({ notes, onRemoveNote, loadNotes, onPinNote, onDupli
                     transferNoteToMailApp={transferNoteToMailApp} />
             </section>
 
-            {/* TODO: re-enable once NoteEdit can load - it imports Modal.jsx, ColorInput.jsx,
-                NoteTag.jsx and the four CreateNoteBy*.jsx cmps, none of which exist yet.
+
             {isEditModalOpen && (
                 <NoteModal isOpen={isEditModalOpen} onCloseModal={onCloseModal} bgColor={noteToEdit.style.backgroundColor}>
                     <NoteEdit
@@ -115,7 +114,7 @@ export function NotePreview({ notes, onRemoveNote, loadNotes, onPinNote, onDupli
                         transferNoteToMailApp={transferNoteToMailApp}
                     />
                 </NoteModal>
-            )} */}
+            )}
         </Fragment >
     )
 }

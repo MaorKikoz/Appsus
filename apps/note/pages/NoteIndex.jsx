@@ -4,7 +4,7 @@ const { useSearchParams } = ReactRouterDOM
 import { NotePreview } from "../cmps/NotePreview.jsx"
 import { NoteFilter } from "../cmps/NoteFilter.jsx"
 import { Menu } from "../cmps/Menu.jsx"
-import { ColorPicker } from "../cmps/ColorPicker.jsx"
+import { ColorInput } from "../cmps/ColorInput.jsx"
 import { noteService } from "../services/note.service.js"
 import { showErrorMsg, showSuccessMsg } from "../../../services/event-bus.service.js"
 
@@ -101,7 +101,6 @@ export function NoteIndex() {
 		setNoteToAdd(noteService.getEmptyNote())
 	}
 
-	// a brand new note has to go through post(), so drop the placeholder id
 	function onAddNote(note) {
 		noteService.save({ ...note, id: '' })
 			.then(() => {
@@ -211,7 +210,7 @@ export function NoteIndex() {
 													<i className="fa-solid fa-palette"></i>
 												</button>
 											</div>
-											{isNoteStyle && <ColorPicker onSetStyle={onSetNoteStyle} />}
+											{isNoteStyle && <ColorInput onSetStyle={onSetNoteStyle} />}
 											<button
 												className="save-new-note-btn"
 												onClick={() => onAddNote(noteToAdd)}>Save</button>

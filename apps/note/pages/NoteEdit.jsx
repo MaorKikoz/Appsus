@@ -16,12 +16,10 @@ export function NoteEdit({ note, onCloseModal, setNotes, setNoteType, isOpen, tr
     const [cmpType, setCmpType] = useState('')
     const [todosCounter, setTodosCounter] = useState((noteToEdit.info.todos) ? noteToEdit.info.todos.length : 0)
     const [isNoteStyle, setIsNoteStyle] = useState(false)
-    const [isDrawingModalOpen, setIsDrawingModalOpen] = useState(false)
-
-    // const [imgUrl, setImgUrl] = useState(note.info.imgUrl || '')
+    const [imgUrl, setImgUrl] = useState(note.info.imgUrl || '')
     // const [videoUrl, setVideoUrl] = useState(note.info.videoUrl || '')
     // const [drawingUrl, setDrawingUrl] = useState(note.info.drawingUrl || '')
-
+    const [isDrawingModalOpen, setIsDrawingModalOpen] = useState(false)
     const titleAreaRef = useRef(null)
     const textareaRef = useRef(null)
 
@@ -61,10 +59,7 @@ export function NoteEdit({ note, onCloseModal, setNotes, setNoteType, isOpen, tr
             if (field === 'noteTitle') {
                 return { ...prevNote, noteTitle: value }
             }
-            if (field === 'tag') {
-                const tags = value.split(',')
-                return { ...prevNote, labels: tags }
-            }
+
             return { ...prevNote, info: { ...prevNote.info, [field]: value } }
         })
     }
@@ -232,17 +227,11 @@ export function NoteEdit({ note, onCloseModal, setNotes, setNoteType, isOpen, tr
                         handleInfoChangeForTodos={handleInfoChangeForTodos}
                         setTodosCounter={setTodosCounter}
                         isAddingNote={false}
-                        // isDrawingModalOpen={isDrawingModalOpen}
-                        // closeDrawingModal={closeDrawingModal}
+                        isDrawingModalOpen={isDrawingModalOpen}
+                        closeDrawingModal={closeDrawingModal}
                         setNoteToEdit={setNoteToEdit}
                     />
 
-                    {note.labels && note.labels.length !== 0 &&
-                        <div className="tag-list">
-                            {note.labels.map((tag, i) =>
-                                tag &&
-                                <span className="tag" key={i}>{tag}</span>)}
-                        </div>}
 
 
                     <div className="actions">
@@ -283,12 +272,6 @@ export function NoteEdit({ note, onCloseModal, setNotes, setNoteType, isOpen, tr
                                 <i className="fa-regular fa-envelope"></i>
                             </button>
 
-                            <button
-                                type='button'
-                                title="Tag"
-                                onClick={() => { setCmpType('NoteTag') }}>
-                                <i className="fa-solid fa-tag"></i>
-                            </button>
                         </div>
                         <button className="save-new-note-btn" onClick={() => onSubmit(noteToEdit)}>Save</button>
                     </div>
@@ -308,6 +291,8 @@ function DynamicCmp(props) {
             return <CreateNoteByVideo {...props} />
         case 'NoteTodos':
             return <CreateNoteByTodos {...props} />
+        case 'NoteDrawing':
+            return <CreateNoteByDrawing {...props} />
         default:
             return null
     }
