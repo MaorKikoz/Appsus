@@ -1,0 +1,24 @@
+* {
+    box-sizing: border-box;
+}
+
+.canvas-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6em;
+}
+
+canvas {
+    background-color: white;
+    border-radius: 1em;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+}
+
+.save-drawing-btn {
+    align-self: flex-start;
+    padding: 0.5em 1em;
+    border-radius: 0.5em;
+    border: none;
+
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+}

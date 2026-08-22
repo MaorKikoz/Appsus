@@ -1,12 +1,11 @@
 
 @import './NotePreview.css';
-@import './Modal.css';
+@import './NoteModal.css';
 @import './NoteEdit.css';
 @import './NoteFilter.css';
 @import './NoteList.css';
-/* @import './Menu.css'; - file does not exist yet */
-/* @import './apps/note/cmps/FilterOptions.css';
-@import './apps/note/cmps/ColorInput.css'; */
+@import './Menu.css'; 
+@import './apps/note/cmps/ColorInput.css';
  
  * {
      box-sizing: border-box;
@@ -188,3 +187,180 @@
 .color-block:hover {
     border-color: #41431B;
 }
+
+.new-note input {
+     padding: 0.7em;
+ }
+
+ .new-note input,
+ .textarea-input {
+     border: none;
+     font-family: inherit;
+     font-weight: 500;
+ }
+
+ .textarea-input {
+     width: 100%;
+     padding: 1em 1em 0;
+
+     overflow: hidden;
+     resize: none;
+
+     line-height: 1.2rem;
+ }
+
+ .new-note input:focus,
+ .textarea-input:focus {
+     outline: none;
+     background-color: white;
+ }
+
+ .new-note label {
+     padding: 0.7em;
+     cursor: pointer;
+ }
+
+ .new-note button:not(.save-new-note-btn, .pin-btn, .delete-btn, .pin-btn-adding-form, .pin-btn-edit-modal, .save-drawing-btn) {
+     align-self: flex-end;
+     background-color: transparent;
+     border: none;
+
+     padding: 1em;
+     cursor: pointer;
+ }
+
+ .new-note button:not(.save-new-note-btn, .pin-btn, .delete-btn, .save-drawing-btn):hover,
+ .new-note label:not(.checkbox-label-preview):hover,
+ .note-bars-btn:hover {
+     border-radius: 50%;
+     background-color: whitesmoke;
+ }
+
+ .save-new-note-btn {
+     align-self: flex-end;
+     background-color: transparent;
+     border: none;
+     padding: 0.5em 1em;
+     margin-block-end: 0.7em;
+     color: var(--crl-font-2);
+     cursor: pointer;
+ }
+
+ .save-new-note-btn:hover {
+     border-radius: .5em;
+     background-color: whitesmoke;
+ }
+
+ .actions {
+     position: relative;
+     display: flex;
+     justify-content: space-between;
+     padding-bottom: 0.3em;
+ }
+
+ input.control-color {
+     opacity: 0;
+     position: absolute;
+     z-index: -1;
+
+     width: 30px;
+     height: 30px;
+     padding: 0.1em;
+
+     border: 1px solid rgb(220, 220, 220);
+     border-radius: 5px;
+
+     background-color: white;
+ }
+
+ .keep-header {
+     display: flex;
+     width: 100%;
+     justify-content: center;
+
+     padding: 0.5em;
+     border-bottom: 1px solid rgb(221, 221, 221);
+ }
+
+ .keep-header img {
+     height: 45px;
+ }
+
+ .menu-and-logo {
+     display: flex;
+     gap: 1em;
+ }
+
+ .keep-logo {
+     display: flex;
+     gap: 0.7em;
+     align-items: center;
+     margin-inline-end: auto;
+
+     font-size: 1.5rem;
+     font-family: inherit;
+     color: var(--crl-font);
+ }
+
+ .note-bars-btn {
+     background-color: transparent;
+     border: none;
+     width: 2em;
+     height: 2em;
+
+     font-size: 1.5rem;
+     cursor: pointer;
+ }
+
+ .note-bars-btn img {
+     object-fit: contain;
+     width: 1em;
+ }
+
+ .actions-collapsed-form {
+     position: absolute;
+     right: 1.5em;
+     transform: translate(0, -50%);
+
+     display: flex;
+     gap: 0.8em;
+ }
+
+ .actions-collapsed-form>* {
+     padding: 0.5em;
+     border-radius: 50%;
+ }
+
+ .actions-collapsed-form img {
+     width: 1.3em;
+     opacity: 0.8;
+     cursor: pointer;
+ }
+
+ .actions-collapsed-form>*:hover {
+     background-color: #ededed;
+ }
+
+ .todo-list:first-of-type,
+ .url-input,
+ .tag-input {
+     display: flex;
+     width: 100%;
+     border-top: 1px solid lightgray;
+     border-bottom: 1px solid lightgray;
+ }
+
+ .todo-list {
+     border-bottom: 1px solid lightgray;
+     display: flex;
+     width: 100%;
+ }
+
+ .todo-list input {
+     width: 100%;
+ }
+
+ .url-input input,
+ .tag-input input {
+     width: 100%;
+ }
