@@ -5,7 +5,7 @@
 @import './NoteFilter.css';
 @import './NoteList.css';
 @import './Menu.css'; 
-@import './apps/note/cmps/ColorInput.css';
+@import './ColorInput.css';
  
  * {
      box-sizing: border-box;
