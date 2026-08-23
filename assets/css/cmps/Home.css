@@ -79,3 +79,82 @@
         grid-template-columns: repeat(auto-fit, minmax(15em, 1fr));
     }
 }
+
+/* reset local storage - the only destructive control in the app, so it stays
+   quiet until asked and confirms before it fires */
+.home .storage-reset {
+    display: grid;
+    justify-items: center;
+    gap: .75em;
+
+    margin-block-start: 3em;
+    padding-block-start: 2em;
+    border-block-start: 1px solid var(--border);
+    text-align: center;
+}
+
+.home .storage-reset p {
+    max-width: 32em;
+    margin: 0;
+    color: var(--gray1);
+    font-size: .9rem;
+}
+
+.home .btn-reset {
+    padding: .55em 1.4em;
+    border: 1px solid var(--border);
+    border-radius: 2em;
+
+    background-color: var(--bg-panel);
+    color: var(--gray1);
+    font: inherit;
+    font-size: .9rem;
+    cursor: pointer;
+}
+
+.home .btn-reset:hover {
+    border-color: var(--clr-accent);
+    color: var(--clr-accent);
+}
+
+.home .reset-confirm {
+    display: grid;
+    justify-items: center;
+    gap: .75em;
+}
+
+.home .reset-warning {
+    color: var(--clr-accent);
+    font-size: .9rem;
+}
+
+.home .reset-buttons {
+    display: flex;
+    gap: .5em;
+}
+
+.home .reset-buttons button {
+    padding: .55em 1.4em;
+    border: 1px solid var(--border);
+    border-radius: 2em;
+
+    background-color: var(--bg-panel);
+    color: var(--gray3);
+    font: inherit;
+    font-size: .9rem;
+    cursor: pointer;
+}
+
+.home .btn-reset-yes {
+    border-color: var(--clr-accent);
+    background-color: var(--clr-accent);
+    color: white;
+}
+
+.home .btn-reset-yes:hover {
+    background-color: #a01916;
+}
+
+.home .btn-reset-no:hover {
+    background-color: var(--bg-hover);
+}

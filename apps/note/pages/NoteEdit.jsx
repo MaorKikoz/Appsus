@@ -278,7 +278,7 @@ export function NoteEdit({ note, onCloseModal, setNotes, setNoteType, isOpen, tr
                     </div>
                 </div>
             </div>
-            {isNoteStyle && <ColorInput onSetNoteStyle={onSetNoteStyle} bgColor={bgColor} />}
+            {isNoteStyle && <ColorInput onSetStyle={onSetNoteStyle} bgColor={bgColor} />}
 
         </section>
     )

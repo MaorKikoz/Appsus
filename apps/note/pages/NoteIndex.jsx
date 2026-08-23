@@ -9,6 +9,14 @@ import { noteService } from "../services/note.service.js"
 import { showErrorMsg, showSuccessMsg } from "../../../services/event-bus.service.js"
 
 
+// the css breakpoint, mirrored here. below it the nav is a drawer over the
+// board, above it a rail the hamburger widens into a labelled column
+const DESKTOP_MIN_WIDTH = 750
+
+function isDesktop() {
+    return window.matchMedia(`(min-width: ${DESKTOP_MIN_WIDTH}px)`).matches
+}
+
 export function NoteIndex() {
 	const [notes, setNotes] = useState(null)
 
@@ -25,10 +33,6 @@ export function NoteIndex() {
 		setSearchParams(filterBy)
 		loadNotes()
 	}, [filterBy])
-
-	useEffect(() => {
-		document.body.style.backgroundColor = '#FFFFFF'
-	}, [])
 
 	useEffect(() => {
 		document.addEventListener('click', handleBodyClick)
@@ -87,6 +91,12 @@ export function NoteIndex() {
 
 	function handleTypeChange(value) {
 		setFilterBy(prevFilter => ({ ...prevFilter, type: value }))
+	}
+
+	// on a phone the nav covers the board it just filtered - get out of the way.
+	// on desktop it is a column, closing it there would be a surprise
+	function onPickType() {
+		if (!isDesktop()) setIsExpandedMenu(false)
 	}
 
 	function handleInfoChange({ target }) {
@@ -185,74 +195,76 @@ export function NoteIndex() {
 					<NoteFilter onSetFilter={onSetFilter} filterBy={filterBy} />
 				</section>
 
-				<section className="menu-and-notes">
+				{isExpandedMenu && <div
+					className="nav-backdrop"
+					onClick={() => setIsExpandedMenu(false)}></div>}
+
+				<section className={isExpandedMenu ? 'menu-and-notes is-nav-open' : 'menu-and-notes'}>
 
 					<Menu
 						isExpandedMenu={isExpandedMenu}
-						setIsExpandedMenu={setIsExpandedMenu}
-						handleTypeChange={handleTypeChange} />
+						activeType={filterBy.type}
+						handleTypeChange={handleTypeChange}
+						onPickType={onPickType} />
 
-					<div>
-						<section className="new-note">
-							<div className="add-note-form collapsible-element" style={{ backgroundColor: bgColor }}>
-								<div className="info-area">
-									{isExpandedForm && <button
-										className={`pin-btn-adding-form ${(noteToAdd.isPinned ? 'pinned' : '')}`}
-										onClick={ev => { ev.stopPropagation(); onToggleIsPinned() }}>
-										<i className="fa-solid fa-thumbtack"></i>
-									</button>}
+					<section className="new-note">
+						<div className="add-note-form collapsible-element" style={{ backgroundColor: bgColor }}>
+							<div className="info-area">
+								{isExpandedForm && <button
+									className={`pin-btn-adding-form ${(noteToAdd.isPinned ? 'pinned' : '')}`}
+									onClick={ev => { ev.stopPropagation(); onToggleIsPinned() }}>
+									<i className="fa-solid fa-thumbtack"></i>
+								</button>}
 
+								<textarea
+									className="textarea-input"
+									name="noteTitle"
+									id="title"
+									placeholder={isExpandedForm ? 'Title' : 'Take a note…'}
+									value={noteToAdd.noteTitle || ''}
+									onChange={handleInfoChange}
+									onClick={() => setIsExpandedForm(true)}
+									style={{ backgroundColor: bgColor }} />
+
+								{isExpandedForm && <section className="expanded-form">
 									<textarea
 										className="textarea-input"
-										name="noteTitle"
-										id="title"
-										placeholder={isExpandedForm ? 'Title' : 'New note...'}
-										value={noteToAdd.noteTitle || ''}
+										name="txt"
+										id="txt"
+										placeholder="New note..."
+										value={noteToAdd.info.txt || ''}
 										onChange={handleInfoChange}
-										onClick={() => setIsExpandedForm(true)}
 										style={{ backgroundColor: bgColor }} />
 
-									{isExpandedForm && <section className="expanded-form">
-										<textarea
-											className="textarea-input"
-											name="txt"
-											id="txt"
-											placeholder="New note..."
-											value={noteToAdd.info.txt || ''}
-											onChange={handleInfoChange}
-											style={{ backgroundColor: bgColor }} />
-
-										<div className="actions">
-											<div className="actions-toolbar">
-												<button
-													type="button"
-													title="Background color"
-													onClick={() => setIsNoteStyle(prevValue => !prevValue)}>
-													<i className="fa-solid fa-palette"></i>
-												</button>
-											</div>
-											{isNoteStyle && <ColorInput onSetStyle={onSetNoteStyle} />}
+									<div className="actions">
+										<div className="actions-toolbar">
 											<button
-												className="save-new-note-btn"
-												onClick={() => onAddNote(noteToAdd)}>Save</button>
+												type="button"
+												title="Background color"
+												onClick={() => setIsNoteStyle(prevValue => !prevValue)}>
+												<i className="fa-solid fa-palette"></i>
+											</button>
 										</div>
-									</section>}
-								</div>
+										{isNoteStyle && <ColorInput onSetStyle={onSetNoteStyle} />}
+										<button
+											className="save-new-note-btn"
+											onClick={() => onAddNote(noteToAdd)}>Save</button>
+									</div>
+								</section>}
 							</div>
+						</div>
 
-							<NotePreview
-								notes={notes}
-								onRemoveNote={onRemoveNote}
-								loadNotes={loadNotes}
-								onPinNote={onPinNote}
-								onDuplicateNote={onDuplicateNote}
-								setNotes={setNotes}
-							/>
+						<NotePreview
+							notes={notes}
+							onRemoveNote={onRemoveNote}
+							loadNotes={loadNotes}
+							onPinNote={onPinNote}
+							onDuplicateNote={onDuplicateNote}
+							setNotes={setNotes}
+						/>
 
-						</section>
-					</div>
+					</section>
 				</section>
-
 			</section>
 		</div>
 	)

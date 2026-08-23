@@ -1,9 +1,5 @@
  /* note list */
-* {
-     box-sizing: border-box;
- }
-
- .todo-list-preview {
+.todo-list-preview {
      display: flex;
      flex-direction: column;
      grid-column: 1/-1;

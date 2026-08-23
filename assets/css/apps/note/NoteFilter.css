@@ -1,57 +1,55 @@
-* {
-    box-sizing: border-box;
-}
+ /* keep's search - a wide filled field that takes the rest of the app bar */
 
-.note-filter {
+.note-index .note-filter {
+    flex: 1;
+    min-width: 0;
+    max-width: 45rem;
     margin-inline-end: auto;
 }
 
-.form-filter {
+.note-index .form-filter {
     position: relative;
 }
 
-.note-filter input {
+.note-index .note-filter input {
     width: 100%;
-    height: 3em;
-    padding: 1em 3.3em 1em;
+    height: 3rem;
+    padding: 0 1rem 0 3.2rem;
 
     border: none;
-    border-radius: 0.3em;
+    border-radius: .5rem;
 
-    background-color: whitesmoke;
-    font-size: 1.2rem;
+    background-color: var(--bg-app);
+    color: var(--gray3);
     font-family: inherit;
+    font-size: 1rem;
 }
 
-.note-filter input:focus {
+.note-index .note-filter input:focus {
     outline: none;
-    background-color: white;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+    background-color: var(--bg-panel);
+    box-shadow: var(--shadow-1);
 }
 
-.search {
-    display: grid;
-    justify-content: center;
-    margin-block-start: 20px;
-    margin-block-end: 40px;
-}
-
-.search-btn {
+.note-index .search-btn {
     position: absolute;
-    top: 50%;
-    left: 15px;
-    padding: 0.5em;
+    inset-block-start: 50%;
+    inset-inline-start: .5rem;
+    transform: translateY(-50%);
+
+    width: 2.2rem;
+    height: 2.2rem;
+    padding: 0;
 
     border: none;
+    border-radius: 50%;
     background-color: transparent;
-    color: #666;
-    font-size: 1.1rem;
-
-    transform: translate(0, -50%);
+    color: var(--gray1);
+    font-size: 1rem;
+    line-height: 1;
     cursor: pointer;
 }
 
-.search-btn:hover {
-    background-color: rgb(225, 224, 224);
-    border-radius: 50%;
+.note-index .search-btn:hover {
+    background-color: var(--bg-hover);
 }

@@ -1,55 +1,113 @@
-* {
-    box-sizing: border-box;
+ /* the keep nav.
+
+    closed it is an icon rail, open it is a labelled column - the hamburger in
+    the app bar switches between the two. on a phone there is no room for
+    either beside the board, so it slides in over it instead */
+
+.note-index .note-nav {
+    position: sticky;
+    inset-block-start: calc(var(--header-height) + var(--keep-bar-height));
+
+    padding-block: .75rem;
+    overflow: hidden;
 }
 
-.menu-and-notes {
-    display: flex;
-    width: 100%;
+.note-index .note-nav ul {
+    display: grid;
+    gap: .1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
-.menu {
-    position: relative;
-    padding: 0 1em;
-
-
-    padding-top: 20px;
-
-    transition: 0.5s ease;
-}
-
-.menu i {
-    width: 2em;
-    height: 2em;
+.note-index .nav-item {
     display: flex;
     align-items: center;
-    justify-content: center;
+    gap: 1.2rem;
+    width: 100%;
 
-    border-radius: 50%;
-    font-size: 1.5em;
-    background-color: #FEEFC3;
+    padding: .7em .8em .7em 1.5em;
+    border: 0;
+    border-radius: 0 2em 2em 0;
+
+    background: none;
+    color: var(--gray3);
+    font: inherit;
+    font-size: .92rem;
+    text-align: start;
+    white-space: nowrap;
     cursor: pointer;
 }
 
-.menu-notes {
-    position: absolute;
-    top: 0px;
-
-    padding: 0;
-    padding-top: 20px;
-    padding-right: 10px;
-    margin: 0;
-
-    height: 100%;
-    width: 200px;
-
-    background-color: white;
-    z-index: 11;
-    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
+.note-index .nav-item:hover {
+    background-color: var(--bg-hover);
 }
 
-.menu-notes li {
-    list-style-type: none;
-    background-color: #FEEFC3;
-    padding: 0.8em 5em;
-    border-radius: 10em;
+/* keep marks the open section with its yellow, not with the app accent */
+.note-index .nav-item.active {
+    background-color: #feefc3;
+    font-weight: 500;
+}
+
+.note-index .nav-icon {
+    flex: none;
+    width: 1.2em;
+    text-align: center;
+    font-size: 1.05em;
+    color: var(--gray1);
+}
+
+.note-index .nav-item.active .nav-icon {
+    color: var(--gray3);
+}
+
+/* the rail - a full pill again once there is nothing but an icon in it */
+.note-index .note-nav:not(.is-open) .nav-label {
+    display: none;
+}
+
+.note-index .note-nav:not(.is-open) .nav-item {
+    justify-content: center;
+    padding-inline: .5em;
+    border-radius: 2em;
+}
+
+@media (max-width: 749px) {
+    .note-index .note-nav {
+        position: fixed;
+        inset-block: 0;
+        inset-inline-start: 0;
+        z-index: 30;
+
+        width: var(--keep-nav-width);
+        padding-block-start: 1rem;
+        overflow-y: auto;
+
+        background-color: var(--bg-panel);
+        box-shadow: var(--shadow-2);
+
+        transform: translateX(-100%);
+        transition: transform .2s ease;
+    }
+
+    .note-index .note-nav.is-open {
+        transform: translateX(0);
+    }
+
+    /* the drawer always has room for the words, rail or not */
+    .note-index .note-nav:not(.is-open) .nav-label {
+        display: inline;
+    }
+
+    .note-index .note-nav:not(.is-open) .nav-item {
+        justify-content: flex-start;
+        padding-inline: 1.5em .8em;
+        border-radius: 0 2em 2em 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .note-index .note-nav {
+        transition: none;
+    }
 }

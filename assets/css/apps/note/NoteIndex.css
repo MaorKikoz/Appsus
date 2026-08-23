@@ -1,370 +1,324 @@
-
 @import './NotePreview.css';
 @import './NoteModal.css';
 @import './NoteEdit.css';
 @import './NoteFilter.css';
 @import './NoteList.css';
-@import './Menu.css'; 
+@import './Menu.css';
 @import './ColorInput.css';
- 
- * {
-     box-sizing: border-box;
- }
 
- .main-note {
-     display: flex;
-     flex-direction: column;
-     align-items: center;
+/* missKeep - the shell.
 
-     margin-block-start: 10px;
- }
+   keep's chrome is three pieces: a sticky app bar, a nav rail down the left
+   that the hamburger widens into a labelled column, and the board itself with
+   the take-a-note card centred above the masonry.
 
- .new-note {
-     display: flex;
-     flex-direction: column;
-     align-items: stretch;
+   this file used to declare .keep-header, .menu-and-logo, .keep-logo,
+   .note-bars-btn, .add-note-form, .textarea-input, .save-new-note-btn and
+   .actions twice each, with the two copies disagreeing. one declaration each
+   now */
 
-     gap: 1.5rem;
-     margin-block-start: 1.5rem;
- }
+.note-index {
+    --keep-bar-height: 4rem;
+    --keep-nav-width: 17rem;
+    --keep-nav-rail: 4.5rem;
 
- .add-note-form {
-     display: flex;
-     flex-direction: column;
-     position: relative;
+    min-height: calc(100vh - var(--header-height));
+    background-color: var(--bg-panel);
+}
 
-     width: 100%;
-     max-width: 37.5rem;
-     margin-inline: auto;
+.note-index .main-note {
+    display: flex;
+    flex-direction: column;
+}
 
-     border: 1px solid lightgray;
-     border-radius: 0.6em;
+/* the app bar sits directly under the appsus header, and stays there */
+.note-index .keep-header {
+    position: sticky;
+    inset-block-start: var(--header-height);
+    z-index: 15;
 
-     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
- }
-
-/* keep header + add-note form */
-.keep-header {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: .5rem;
 
-    width: 80vw;
-    max-width: 1300px;
-    padding-block: 10px;
+    height: var(--keep-bar-height);
+    padding-inline: .5rem 1rem;
+
+    background-color: var(--bg-panel);
+    border-block-end: 1px solid var(--border);
 }
 
-.menu-and-logo {
+.note-index .menu-and-logo {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: .5rem;
+    flex: none;
 }
 
-.keep-logo {
+.note-index .keep-logo {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 1.4rem;
-    color: #5f6368;
+    gap: .5rem;
+    margin-inline-end: 1rem;
+
+    color: var(--gray1);
+    font-size: 1.35rem;
 }
 
-.note-bars-btn,
-.menu {
-    border: none;
-    background-color: transparent;
-    padding: 0.6em;
-    border-radius: 50%;
-    font-size: 1.1rem;
-    cursor: pointer;
+.note-index .keep-logo i {
+    color: var(--clr-star);
 }
 
-.note-bars-btn:hover,
-.menu:hover {
-    background-color: whitesmoke;
-}
-
-.menu-notes {
-    list-style-type: none;
+.note-index .note-bars-btn {
+    flex: none;
+    width: 2.5rem;
+    height: 2.5rem;
     padding: 0;
-}
+    border: 0;
+    border-radius: 50%;
 
-.menu-notes li {
-    padding: 0.5em 1em;
-    border-radius: 0 2em 2em 0;
+    background: none;
+    color: var(--gray1);
+    font: inherit;
+    font-size: 1.05rem;
+    line-height: 1;
     cursor: pointer;
 }
 
-.menu-notes li:hover {
-    background-color: whitesmoke;
+.note-index .note-bars-btn:hover {
+    background-color: var(--bg-hover);
 }
 
-.add-note-form {
+/* nav rail beside the board. the width is the whole animation */
+.note-index .menu-and-notes {
+    display: grid;
+    grid-template-columns: var(--keep-nav-rail) 1fr;
+    align-items: start;
+    transition: grid-template-columns .2s ease;
+}
+
+.note-index .menu-and-notes.is-nav-open {
+    grid-template-columns: var(--keep-nav-width) 1fr;
+}
+
+.note-index .new-note {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.5rem;
+
+    min-width: 0;
+    padding: 1.5rem 1rem 4rem;
+}
+
+/* take a note - a centred card, the way keep floats it above the board */
+.note-index .add-note-form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
     width: 100%;
-    max-width: 36em;
+    max-width: 37.5rem;
+    margin-inline: auto;
+
+    border: 1px solid var(--border);
+    border-radius: .5rem;
+    background-color: var(--bg-panel);
+    box-shadow: var(--shadow-1);
 }
 
-.add-note-form .info-area {
+.note-index .add-note-form:focus-within {
+    box-shadow: var(--shadow-2);
+}
+
+.note-index .add-note-form .info-area {
     position: relative;
     display: flex;
     flex-direction: column;
 }
 
-.textarea-input {
-    resize: none;
+.note-index .textarea-input {
+    width: 100%;
+    padding: .9em 1em;
+
     border: none;
     outline: none;
     overflow: hidden;
+    resize: none;
 
-    padding: 0.9em 1em;
+    background-color: transparent;
+    color: var(--gray3);
     font-family: inherit;
     font-size: 1rem;
+    line-height: 1.4;
 }
 
-.add-note-form textarea[name="noteTitle"] {
+.note-index .add-note-form textarea[name="noteTitle"] {
     font-size: 1.05rem;
     font-weight: 500;
 }
 
-.pin-btn-adding-form {
-    position: absolute;
-    top: 4px;
-    right: 6px;
+.note-index .add-note-form textarea[name="txt"] {
+    padding-block-start: 0;
+}
 
+.note-index .pin-btn-adding-form {
+    position: absolute;
+    inset-block-start: 4px;
+    inset-inline-end: 6px;
+
+    padding: .6em;
     border: none;
-    background-color: transparent;
-    padding: 0.6em;
     border-radius: 50%;
+    background-color: transparent;
+    color: var(--gray1);
     cursor: pointer;
 }
 
-.add-note-form .actions {
+.note-index .pin-btn-adding-form:hover {
+    background-color: var(--bg-hover);
+}
+
+.note-index .add-note-form .actions {
+    position: relative;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 10px;
-    padding: 0.3em 1em 0.8em;
+    gap: .5rem;
+
+    padding: .2em .6em .6em;
 }
 
-.actions-toolbar button {
+.note-index .actions-toolbar button {
+    width: 2.2em;
+    height: 2.2em;
+    padding: 0;
     border: none;
-    background-color: transparent;
-    padding: 0.5em;
     border-radius: 50%;
-    color: #5f6368;
-    cursor: pointer;
-}
 
-.actions-toolbar button:hover {
-    background-color: rgba(0, 0, 0, 0.08);
-}
-
-.save-new-note-btn {
-    margin-inline-start: auto;
-    border: none;
     background-color: transparent;
-    padding: 0.6em 1.2em;
-    border-radius: 0.3em;
-    font-family: inherit;
-    font-size: 0.95rem;
+    color: var(--gray1);
+    font: inherit;
+    line-height: 1;
     cursor: pointer;
 }
 
-.save-new-note-btn:hover {
-    background-color: rgba(0, 0, 0, 0.08);
+.note-index .actions-toolbar button:hover {
+    background-color: var(--bg-hover);
 }
 
-/* ColorPicker.jsx - swatches have no intrinsic size without this */
-.color-picker {
+.note-index .save-new-note-btn {
+    margin-inline-start: auto;
+    padding: .6em 1.2em;
+
+    border: none;
+    border-radius: .3em;
+    background-color: transparent;
+    color: var(--gray1);
+    font-family: inherit;
+    font-size: .95rem;
+    cursor: pointer;
+}
+
+.note-index .save-new-note-btn:hover {
+    background-color: var(--bg-hover);
+}
+
+/* the colour swatches have no intrinsic size without this */
+.note-index .color-picker {
     display: flex;
+    flex-wrap: wrap;
     gap: 8px;
 }
 
-.color-block {
+.note-index .color-block {
     width: 26px;
     height: 26px;
 
-    border: 1px solid rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(0, 0, 0, .15);
     border-radius: 50%;
     cursor: pointer;
 }
 
-.color-block:hover {
-    border-color: #41431B;
+.note-index .color-block:hover {
+    border-color: var(--gray3);
 }
 
-.new-note input {
-     padding: 0.7em;
- }
+@media (max-width: 749px) {
 
- .new-note input,
- .textarea-input {
-     border: none;
-     font-family: inherit;
-     font-weight: 500;
- }
+    /* the nav becomes a drawer, so the board gets the whole width */
+    .note-index .menu-and-notes,
+    .note-index .menu-and-notes.is-nav-open {
+        grid-template-columns: 1fr;
+    }
 
- .textarea-input {
-     width: 100%;
-     padding: 1em 1em 0;
+    .note-index .nav-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 25;
+        background-color: rgba(32, 33, 36, .45);
+    }
 
-     overflow: hidden;
-     resize: none;
+    .note-index .keep-logo span {
+        display: none;
+    }
 
-     line-height: 1.2rem;
- }
+    .note-index .new-note {
+        padding-inline: .75rem;
+    }
+}
 
- .new-note input:focus,
- .textarea-input:focus {
-     outline: none;
-     background-color: white;
- }
+@media (prefers-reduced-motion: reduce) {
+    .note-index .menu-and-notes {
+        transition: none;
+    }
+}
 
- .new-note label {
-     padding: 0.7em;
-     cursor: pointer;
- }
+/* the todo rows inside both forms. the + button used to be caught by a long
+   :not() chain in this file; it gets its own rule now */
+.note-index .todo-list,
+.note-index .url-input,
+.note-index .tag-input {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border-block-end: 1px solid var(--border);
+}
 
- .new-note button:not(.save-new-note-btn, .pin-btn, .delete-btn, .pin-btn-adding-form, .pin-btn-edit-modal, .save-drawing-btn) {
-     align-self: flex-end;
-     background-color: transparent;
-     border: none;
+.note-index .todo-list input,
+.note-index .url-input input,
+.note-index .tag-input input {
+    width: 100%;
+    padding: .6em .8em;
+    border: none;
+    background-color: transparent;
+    font-family: inherit;
+    font-size: .95rem;
+}
 
-     padding: 1em;
-     cursor: pointer;
- }
+.note-index .todo-list input:focus,
+.note-index .url-input input:focus,
+.note-index .tag-input input:focus {
+    outline: none;
+}
 
- .new-note button:not(.save-new-note-btn, .pin-btn, .delete-btn, .save-drawing-btn):hover,
- .new-note label:not(.checkbox-label-preview):hover,
- .note-bars-btn:hover {
-     border-radius: 50%;
-     background-color: whitesmoke;
- }
+.note-index .todo-list button {
+    flex: none;
+    width: 2rem;
+    height: 2rem;
+    margin-inline-start: .4em;
+    padding: 0;
 
- .save-new-note-btn {
-     align-self: flex-end;
-     background-color: transparent;
-     border: none;
-     padding: 0.5em 1em;
-     margin-block-end: 0.7em;
-     color: var(--crl-font-2);
-     cursor: pointer;
- }
+    border: none;
+    border-radius: 50%;
+    background-color: transparent;
+    color: var(--gray1);
+    font: inherit;
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
+}
 
- .save-new-note-btn:hover {
-     border-radius: .5em;
-     background-color: whitesmoke;
- }
-
- .actions {
-     position: relative;
-     display: flex;
-     justify-content: space-between;
-     padding-bottom: 0.3em;
- }
-
- input.control-color {
-     opacity: 0;
-     position: absolute;
-     z-index: -1;
-
-     width: 30px;
-     height: 30px;
-     padding: 0.1em;
-
-     border: 1px solid rgb(220, 220, 220);
-     border-radius: 5px;
-
-     background-color: white;
- }
-
- .keep-header {
-     display: flex;
-     width: 100%;
-     justify-content: center;
-
-     padding: 0.5em;
-     border-bottom: 1px solid rgb(221, 221, 221);
- }
-
- .keep-header img {
-     height: 45px;
- }
-
- .menu-and-logo {
-     display: flex;
-     gap: 1em;
- }
-
- .keep-logo {
-     display: flex;
-     gap: 0.7em;
-     align-items: center;
-     margin-inline-end: auto;
-
-     font-size: 1.5rem;
-     font-family: inherit;
-     color: var(--crl-font);
- }
-
- .note-bars-btn {
-     background-color: transparent;
-     border: none;
-     width: 2em;
-     height: 2em;
-
-     font-size: 1.5rem;
-     cursor: pointer;
- }
-
- .note-bars-btn img {
-     object-fit: contain;
-     width: 1em;
- }
-
- .actions-collapsed-form {
-     position: absolute;
-     right: 1.5em;
-     transform: translate(0, -50%);
-
-     display: flex;
-     gap: 0.8em;
- }
-
- .actions-collapsed-form>* {
-     padding: 0.5em;
-     border-radius: 50%;
- }
-
- .actions-collapsed-form img {
-     width: 1.3em;
-     opacity: 0.8;
-     cursor: pointer;
- }
-
- .actions-collapsed-form>*:hover {
-     background-color: #ededed;
- }
-
- .todo-list:first-of-type,
- .url-input,
- .tag-input {
-     display: flex;
-     width: 100%;
-     border-top: 1px solid lightgray;
-     border-bottom: 1px solid lightgray;
- }
-
- .todo-list {
-     border-bottom: 1px solid lightgray;
-     display: flex;
-     width: 100%;
- }
-
- .todo-list input {
-     width: 100%;
- }
-
- .url-input input,
- .tag-input input {
-     width: 100%;
- }
+.note-index .todo-list button:hover {
+    background-color: var(--bg-hover);
+}
