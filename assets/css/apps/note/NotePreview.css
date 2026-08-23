@@ -15,20 +15,23 @@
 }
 
 ul.notes {
-    column-gap: 20px;
+    /* the masonry this file was already written for - break-inside and
+       inline-block only do anything once a column axis exists */
+    columns: 15rem;
+    column-gap: 1rem;
 
-    width: 80vw;
-    max-width: 1300px;
+    width: 100%;
+    margin: 0;
     padding: 0;
 }
 
 .notes li {
     position: relative;
     break-inside: avoid;
-    display: inline-block;
-    margin-block-end: 20px;
+    display: block;
+    margin-block-end: 1rem;
 
-    width: 240px;
+    width: 100%;
     height: max-content;
 
     list-style-type: none;
@@ -103,4 +106,34 @@ ul.notes {
 .pin-btn-adding-form.pinned i,
 .pin-btn-edit-modal.pinned i {
     rotate: 0deg;
+}
+
+/* media inside a note - the global img rule would otherwise stretch these,
+   and an iframe with no ratio collapses to a black band */
+.notes li img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.notes li iframe {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 0;
+}
+
+.pinned-notes,
+.unPinned-notes {
+    width: 100%;
+}
+
+.pinned-notes h4,
+.unPinned-notes h1 {
+    padding-inline-start: .25rem;
+    font-size: .75rem;
+    font-weight: 500;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--gray1);
 }

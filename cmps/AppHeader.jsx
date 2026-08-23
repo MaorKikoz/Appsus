@@ -5,7 +5,7 @@ export function AppHeader() {
 
     return <header className="app-header">
         <Link to="/" className="app-logo">
-            <span className="logo-mark">✉</span>
+            <i className="fa-solid fa-envelope logo-mark"></i>
             <h1>Appsus</h1>
         </Link>
 

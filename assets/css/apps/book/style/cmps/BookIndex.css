@@ -1,36 +1,64 @@
 /* Setup */
-@import 'setup/vars.css';
-@import 'setup/typography.css';
+@import '../setup/vars.css';
+@import '../setup/typography.css';
 
 /* Base */
-@import 'base/base.css';
-@import 'base/helpers.css';
-@import 'base/layout.css';
-@import 'base/forms.css';
+@import '../base/base.css';
+@import '../base/helpers.css';
+@import '../base/layout.css';
+@import '../base/forms.css';
 
 /* Components */
-@import 'cmps/About.css';
-@import 'cmps/UserMsg.css';
-@import 'cmps/BookDetails.css';
-@import 'cmps/BookEdit.css';
-@import 'cmps/BookFilter.css';
-@import 'cmps/BookList.css';
-@import 'cmps/BookPreview.css';
-@import 'cmps/reviews.css';
-@import 'cmps/AddReview.css';
-@import 'cmps/ReviewPreview.css';
-@import 'cmps/ReviewList.css';
-@import 'cmps/StarRating.css';
-@import 'cmps/Loader.css';
+@import './About.css';
+@import './UserMsg.css';
+@import './BookDetails.css';
+@import './BookEdit.css';
+@import './BookFilter.css';
+@import './BookList.css';
+@import './BookPreview.css';
+@import './reviews.css';
+@import './AddReview.css';
+@import './ReviewPreview.css';
+@import './ReviewList.css';
+@import './StarRating.css';
+@import './Loader.css';
 
 
-.btn-add-book {
-    position: fixed;
-    top: 50px;
-    right: 40px;
+.book-index {
+	width: 100%;
+	max-width: 1280px;
+	margin-inline: auto;
+	padding: 0 1.5rem 6rem;
+	background-color: var(--bg-panel);
+}
 
-    background-color: var(--clr1);
-    border-radius: 50%;
-    font-size: 1.3em;
-    cursor: pointer;
+.book-index .btn-add-book {
+	position: fixed;
+	inset-block-end: 2rem;
+	inset-inline-end: 2rem;
+	z-index: 10;
+
+	display: grid;
+	place-items: center;
+	width: 3.5rem;
+	height: 3.5rem;
+
+	border: 0;
+	border-radius: 1rem;
+	background-color: var(--bg-chip);
+	color: #041e49;
+
+	font: inherit;
+	font-size: 1.5rem;
+	cursor: pointer;
+	box-shadow: var(--shadow-1);
+	transition: box-shadow .2s ease;
+}
+
+.book-index .btn-add-book:hover {
+	box-shadow: var(--shadow-2);
+}
+
+.book-index .btn-add-book a {
+	color: inherit;
 }

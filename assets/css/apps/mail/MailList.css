@@ -89,3 +89,39 @@
         gap: .25em;
     }
 }
+
+/* icon buttons - sized and coloured like gmail's row actions */
+.mail-list button i {
+    font-size: .95em;
+    color: var(--gray1);
+}
+
+.mail-list .btn-star i {
+    font-size: 1em;
+}
+
+.mail-list .btn-star .fa-solid {
+    color: var(--clr-star);
+}
+
+.mail-list .btn-star .fa-regular {
+    color: var(--gray2);
+}
+
+.mail-list li:hover .btn-star .fa-regular {
+    color: var(--gray1);
+}
+
+/* gmail's row checkbox. .is-selected comes after .is-read/.is-unread on purpose -
+   same specificity, so the blue wash of a ticked row has to win on order */
+.mail-list .mail-select {
+    flex: none;
+    width: 1.05em;
+    height: 1.05em;
+    accent-color: var(--clr-link);
+    cursor: pointer;
+}
+
+.mail-list li.is-selected {
+    background-color: var(--bg-chip);
+}

@@ -1,9 +1,53 @@
-.book-filter {
-	background-color: var(--clr2bg);
+ /* book filter - a quiet toolbar rather than a coloured band */
+
+.book-index .book-filter {
+	padding-block: .75rem;
+	border-block-end: 1px solid var(--border);
+	background-color: var(--bg-panel);
 }
 
-.book-filter form {
+.book-index .book-filter form {
 	display: flex;
-    gap: 1em;
-    padding-block: 0.5em;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: .5rem;
+}
+
+.book-index .book-filter label {
+	font-size: .85rem;
+	color: var(--gray1);
+}
+
+.book-index .book-filter input {
+	min-width: 8rem;
+	padding: .5em .9em;
+
+	border: 1px solid transparent;
+	border-radius: 2em;
+	background-color: var(--bg-app);
+
+	font: inherit;
+	font-size: .9rem;
+}
+
+.book-index .book-filter input:focus {
+	outline: 0;
+	background-color: var(--bg-panel);
+	box-shadow: var(--shadow-1);
+}
+
+/* on a phone the label/input pairs wrap mid-pair - keep each pair together
+   and let the inputs share the row */
+@media (max-width: 560px) {
+	.book-index .book-filter form {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		gap: .5rem .6rem;
+		align-items: center;
+	}
+
+	.book-index .book-filter input {
+		width: 100%;
+		min-width: 0;
+	}
 }

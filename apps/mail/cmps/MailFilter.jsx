@@ -2,7 +2,6 @@ const { useState } = React
 
 import { mailService } from '../services/mail.service.js'
 import { useEffectUpdate } from '../../../custom-hooks/useEffectUpdate.js'
-import { LabelPicker } from '../../../cmps/LabelPicker.jsx'
 
 export function MailFilter({ filterBy, onSetFilterBy }) {
     const [isAdvancedOpen, setIsAdvancedOpen] = useState(false)
@@ -11,7 +10,6 @@ export function MailFilter({ filterBy, onSetFilterBy }) {
         txt: filterBy.txt,
         isRead: filterBy.isRead,
         isStared: filterBy.isStared,
-        labels: filterBy.labels,
         from: filterBy.from,
         subject: filterBy.subject,
         fromDate: filterBy.fromDate,
@@ -39,7 +37,6 @@ export function MailFilter({ filterBy, onSetFilterBy }) {
             txt: defaultFilter.txt,
             isRead: defaultFilter.isRead,
             isStared: defaultFilter.isStared,
-            labels: defaultFilter.labels,
             from: defaultFilter.from,
             subject: defaultFilter.subject,
             fromDate: defaultFilter.fromDate,
@@ -47,19 +44,11 @@ export function MailFilter({ filterBy, onSetFilterBy }) {
             sortBy: defaultFilter.sortBy,
             sortDir: defaultFilter.sortDir,
         })
+        // the labels live in the sidebar now, outside this component's draft
+        onSetFilterBy({ labels: defaultFilter.labels })
     }
 
-    // the picker reports one label - this decides add vs remove
-    function onToggleLabel(label) {
-        setFilterByToEdit(prev => ({
-            ...prev,
-            labels: prev.labels.includes(label)
-                ? prev.labels.filter(currLabel => currLabel !== label)
-                : [...prev.labels, label],
-        }))
-    }
-
-    const { txt, isRead, isStared, labels, from, subject, fromDate, toDate, sortBy, sortDir } = filterByToEdit
+    const { txt, isRead, isStared, from, subject, fromDate, toDate, sortBy, sortDir } = filterByToEdit
 
     return (
         <section className="mail-filter">
@@ -70,41 +59,39 @@ export function MailFilter({ filterBy, onSetFilterBy }) {
                 placeholder="Search mail"
                 onChange={handleChange} />
 
-            <select name="isRead" value={isRead} onChange={handleChange}>
-                <option value="all">All</option>
-                <option value="read">Read</option>
-                <option value="unread">Unread</option>
-            </select>
-
-            <select name="isStared" value={isStared} onChange={handleChange}>
-                <option value="all">All</option>
-                <option value="stared">Stared</option>
-                <option value="unstared">Not stared</option>
-            </select>
-
-            <select name="sortBy" value={sortBy} onChange={handleChange}>
-                <option value="date">Date</option>
-                <option value="title">Title</option>
-            </select>
-
-            <button className="btn-sort-dir" onClick={onToggleSortDir}>
-                {sortDir === 1 ? '▲' : '▼'}
-            </button>
-
-            <button className="btn-clear" onClick={onClearFilter}>Clear</button>
-
             <button
                 className="btn-advanced"
                 onClick={() => setIsAdvancedOpen(prev => !prev)}>
                 {isAdvancedOpen ? '▲' : '▼'} Advanced
             </button>
 
-            <LabelPicker
-                labels={mailService.getLabels()}
-                selectedLabels={labels}
-                onToggleLabel={onToggleLabel} />
-
             {isAdvancedOpen && <div className="advanced-filter">
+                <label htmlFor="isRead">Read</label>
+                <select id="isRead" name="isRead" value={isRead} onChange={handleChange}>
+                    <option value="all">All</option>
+                    <option value="read">Read</option>
+                    <option value="unread">Unread</option>
+                </select>
+
+                <label htmlFor="isStared">Starred</label>
+                <select id="isStared" name="isStared" value={isStared} onChange={handleChange}>
+                    <option value="all">All</option>
+                    <option value="stared">Stared</option>
+                    <option value="unstared">Not stared</option>
+                </select>
+
+                <label htmlFor="sortBy">Sort</label>
+                <select id="sortBy" name="sortBy" value={sortBy} onChange={handleChange}>
+                    <option value="date">Date</option>
+                    <option value="title">Title</option>
+                </select>
+
+                <button className="btn-sort-dir" onClick={onToggleSortDir}>
+                    {sortDir === 1 ? '▲' : '▼'}
+                </button>
+
+                <button className="btn-clear" onClick={onClearFilter}>Clear</button>
+
                 <input
                     type="text"
                     name="from"

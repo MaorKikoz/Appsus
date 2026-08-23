@@ -1,6 +1,7 @@
  /* home */
 
 .home {
+    width: 100%;
     max-width: 60em;
     margin-inline: auto;
     padding: 2em 1em;
@@ -75,6 +76,6 @@
 
 @media (min-width: 750px) {
     .home .app-cards {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(auto-fit, minmax(15em, 1fr));
     }
 }

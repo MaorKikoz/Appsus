@@ -103,7 +103,7 @@ export function MailCompose() {
             <h2>
                 New Message
                 <Link to={backUrl}>
-                    <button type="button" className="btn-close" title="Close">✕</button>
+                    <button type="button" className="btn-close" title="Close"><i className="fa-solid fa-xmark"></i></button>
                 </Link>
             </h2>
 

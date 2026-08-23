@@ -10,6 +10,9 @@ import { MailDetails } from './apps/mail/pages/MailDetails.jsx'
 import { MailCompose } from './apps/mail/pages/MailCompose.jsx'
 import { NoteIndex } from './apps/note/pages/NoteIndex.jsx'
 import { BookIndex } from './apps/book/pages/BookIndex.jsx'
+import { BookDetails } from './apps/book/pages/BookDetails.jsx'
+import { BookEdit } from './apps/book/pages/BookEdit.jsx'
+import { AddGoogleBook } from './apps/book/pages/AddGoogleBook.jsx'
 
 export function RootCmp() {
     return <Router>
@@ -29,7 +32,11 @@ export function RootCmp() {
 
                 {/* note - maor */}
                 <Route path="/note" element={<NoteIndex />} />
-                <Route path="/book" element={<BookIndex/>} />
+                <Route path="/book" element={<BookIndex />} />
+                <Route path="/book/edit" element={<BookEdit />} />
+                <Route path="/book/edit/:bookId" element={<BookEdit />} />
+                <Route path="/book/:bookId" element={<BookDetails />} />
+                <Route path="/add-book" element={<AddGoogleBook />} />
             </Routes>
             <UserMsg />
         </section>

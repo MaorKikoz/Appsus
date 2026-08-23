@@ -1,21 +1,130 @@
+ /* book edit - the add / edit form.
+
+    scoped on .book-edit, not on .book-index. BookEdit is its own route
+    (/book/edit) and renders a sibling of the index, never a child of it, so
+    every .book-index .book-edit rule in here used to match nothing at all.
+    that also means none of the .book-index base/forms styling reaches this
+    page, so the controls are dressed here rather than inherited */
+
+.book-edit {
+    width: 100%;
+    max-width: 34em;
+    margin: 2em auto;
+    padding-inline: 1em;
+
+    font-family: 'Poppins', 'Roboto', sans-serif;
+    color: var(--book-gray3);
+}
+
+.book-edit h2 {
+    margin-block-end: .75em;
+    font-size: 1.4rem;
+    font-weight: 400;
+}
+
 .book-edit form {
     display: grid;
     grid-template-columns: auto 1fr;
+    align-items: center;
     gap: 1em;
 
-    width: 50vw;
-    padding: 1em;
-    background-color: var(--clr2);
-    margin: 100px auto;
+    padding: 1.5em;
+    border-radius: .75em;
+    background-color: var(--bg-panel);
+    box-shadow: var(--shadow-1);
+}
 
-    color: var(--gray1)
+.book-edit label {
+    color: var(--book-gray1);
+    font-size: .9rem;
 }
 
 .book-edit input {
     grid-column: 2;
+    min-width: 0;
+
+    padding: .6em .9em;
+    border: 1px solid var(--border);
+    border-radius: .5em;
+
+    background-color: var(--bg-panel);
+    color: var(--book-gray3);
+    font: inherit;
+    font-size: .95rem;
 }
 
-.actions {
+.book-edit input:focus {
+    outline: 0;
+    border-color: var(--clr-link);
+    box-shadow: 0 0 0 1px var(--clr-link);
+}
+
+.book-edit .actions {
     grid-column: 2;
     justify-self: end;
+
+    display: flex;
+    gap: .5em;
+    padding-block-start: .5em;
+}
+
+.book-edit .actions button {
+    padding: .55em 1.4em;
+    border: 1px solid var(--border);
+    border-radius: 2em;
+
+    background-color: var(--bg-panel);
+    color: var(--book-gray3);
+    font: inherit;
+    font-size: .9rem;
+    cursor: pointer;
+}
+
+.book-edit .actions button:hover {
+    background-color: var(--bg-hover);
+}
+
+/* save is the submit - it is the only button here without type="button" */
+.book-edit .actions button:not([type="button"]) {
+    border-color: var(--clr-link);
+    background-color: var(--clr-link);
+    color: white;
+}
+
+.book-edit .actions button:not([type="button"]):hover {
+    background-color: #0842a0;
+}
+
+/* narrow: the label goes above its field, and the buttons share the row */
+@media (max-width: 560px) {
+    .book-edit form {
+        grid-template-columns: 1fr;
+        gap: .35em;
+    }
+
+    .book-edit label {
+        margin-block-start: .6em;
+    }
+
+    .book-edit input,
+    .book-edit .actions {
+        grid-column: 1;
+    }
+
+    .book-edit .actions {
+        justify-self: stretch;
+        padding-block-start: 1em;
+    }
+
+    .book-edit .actions > * {
+        flex: 1;
+    }
+
+    .book-edit .actions a {
+        display: flex;
+    }
+
+    .book-edit .actions a button {
+        width: 100%;
+    }
 }

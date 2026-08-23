@@ -21,7 +21,5 @@ export function About() {
             <li><strong>Maor Kizoz</strong> - missKeep</li>
         </ul>
 
-        <h2>Built with</h2>
-        <p>React 18 and React Router 6, compiled in the browser by Babel. No build step.</p>
     </section>
 }

@@ -8,6 +8,7 @@ const MAIL_KEY = 'mailDB'
 
 
 
+const HOUR = 1000 * 60 * 60
 const DAY = 1000 * 60 * 60 * 24
 
 export const loggedInUser = {
@@ -23,7 +24,9 @@ export const mailService = {
     query,
     get,
     remove,
+    removeMany,
     save,
+    saveMany,
     send,
     getEmptyMail,
     getDefaultFilter,
@@ -168,10 +171,16 @@ function _getMailFolder(mail) {
 }
 
 
-function save(mail) {
+// nextMailId/prevMailId are computed by get(), they must never reach storage
+function _stripSiblingIds(mail) {
     const mailToSave = { ...mail }
     delete mailToSave.nextMailId
     delete mailToSave.prevMailId
+    return mailToSave
+}
+
+function save(mail) {
+    const mailToSave = _stripSiblingIds(mail)
 
     if (mailToSave.id) {
         return storageService.put(MAIL_KEY, mailToSave)
@@ -196,6 +205,34 @@ function remove(mailId) {
         .then(mail => {
             if (mail.removedAt) return storageService.remove(MAIL_KEY, mailId)
             return storageService.put(MAIL_KEY, { ...mail, removedAt: Date.now() })
+        })
+}
+
+// the bulk ops read once and write once. looping the single item versions would
+// have every call resolve off the same snapshot, and the last save would
+// quietly undo all the others
+function removeMany(mailIds) {
+    return storageService.query(MAIL_KEY)
+        .then(mails => {
+            const removedAt = Date.now()
+            // same rule as remove(): from the trash it is gone, elsewhere it is trashed
+            const remaining = mails
+                .filter(mail => !(mailIds.includes(mail.id) && mail.removedAt))
+                .map(mail => mailIds.includes(mail.id) ? { ...mail, removedAt } : mail)
+
+            utilService.saveToStorage(MAIL_KEY, remaining)
+            return mailIds
+        })
+}
+
+function saveMany(mailsToSave) {
+    return storageService.query(MAIL_KEY)
+        .then(mails => {
+            const savedById = {}
+            mailsToSave.forEach(mail => savedById[mail.id] = _stripSiblingIds(mail))
+
+            utilService.saveToStorage(MAIL_KEY, mails.map(mail => savedById[mail.id] || mail))
+            return Object.values(savedById)
         })
 }
 
@@ -373,6 +410,78 @@ function _getDemoMails() {
             from: 'service@bank.com', to: 'user@appsus.com',
         },
         {
+            id: 'e111', subject: 'Standup moved to 10:15',
+            body: 'Only for today - the room is booked until then. Same link, no need to rejoin.',
+            isRead: false, isStared: false,
+            labels: ['work'],
+            createdAt: now - 0.4 * HOUR, sentAt: now - 0.4 * HOUR, removedAt: null,
+            from: 'dana@coding-academy.com', to: 'user@appsus.com',
+        },
+        {
+            id: 'e112', subject: 'Your pull request needs one more review',
+            body: 'Two approvals are required before merge. I have signed off, still waiting on the second.',
+            isRead: false, isStared: true,
+            labels: ['work', 'important'],
+            createdAt: now - 3 * HOUR, sentAt: now - 3 * HOUR, removedAt: null,
+            from: 'noreply@github.com', to: 'user@appsus.com',
+        },
+        {
+            id: 'e113', subject: 'Table for two, Friday 20:00',
+            body: 'Confirmed. Let us know in advance if anything changes, the terrace fills up quickly.',
+            isRead: true, isStared: false,
+            labels: [],
+            createdAt: now - 7 * HOUR, sentAt: now - 7 * HOUR, removedAt: null,
+            from: 'reservations@thelittlekitchen.com', to: 'user@appsus.com',
+        },
+        {
+            id: 'e114', subject: 'Thinking of you',
+            body: 'No reason. Just remembered the walk we took by the river and wanted to say it out loud.',
+            isRead: false, isStared: true,
+            labels: ['romantic'],
+            createdAt: now - 10 * HOUR, sentAt: now - 10 * HOUR, removedAt: null,
+            from: 'noa@gmail.com', to: 'user@appsus.com',
+        },
+        {
+            id: 'e115', subject: 'CLAIM YOUR INHERITANCE TODAY',
+            body: 'A distant relative has left you a considerable sum. Reply with your bank details to proceed.',
+            isRead: true, isStared: false,
+            labels: ['spam'],
+            createdAt: now - 1.5 * DAY, sentAt: now - 1.5 * DAY, removedAt: null,
+            from: 'barrister@definitely-legal.info', to: 'user@appsus.com',
+        },
+        {
+            id: 'e116', subject: 'Re: Standup moved to 10:15',
+            body: 'Works for me, I will bring the numbers from yesterday.',
+            isRead: true, isStared: false,
+            labels: ['work'],
+            createdAt: now - 0.2 * HOUR, sentAt: now - 0.2 * HOUR, removedAt: null,
+            from: 'user@appsus.com', to: 'dana@coding-academy.com',
+        },
+        {
+            id: 'e117', subject: 'Weekend plans',
+            body: 'I was thinking we could',
+            isRead: true, isStared: false,
+            labels: ['family'],
+            createdAt: now - 2 * HOUR, sentAt: null, removedAt: null,
+            from: 'user@appsus.com', to: 'mom@family.com',
+        },
+        {
+            id: 'e118', subject: '',
+            body: 'Reminder to myself: check whether the compose overlay keeps the filter on close.',
+            isRead: true, isStared: false,
+            labels: [],
+            createdAt: now - 20 * HOUR, sentAt: null, removedAt: null,
+            from: 'user@appsus.com', to: '',
+        },
+        {
+            id: 'e119', subject: 'Old newsletter nobody reads',
+            body: 'Unsubscribe link is at the bottom, in four point grey on white, as tradition demands.',
+            isRead: true, isStared: false,
+            labels: ['spam'],
+            createdAt: now - 14 * DAY, sentAt: now - 14 * DAY, removedAt: now - 3 * DAY,
+            from: 'digest@weekly-things.com', to: 'user@appsus.com',
+        },
+        {
             id: 'e110', subject: 'Lunch?',
             body: 'There is a new place around the corner, want to try it tomorrow?',
             isRead: false, isStared: false,
@@ -390,9 +499,9 @@ function _escapeRegex(txt) {
 
 function getKeepUrl(mail) {
     const params = new URLSearchParams({
-        type: 'NoteTxt',
-        title: mail.subject || '',
-        txt: mail.body || '',
+        addNote: 'NoteTxt',
+        noteTitle: mail.subject || '',
+        noteTxt: mail.body || '',
     })
     return `/note?${params.toString()}`
 }

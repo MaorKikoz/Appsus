@@ -60,3 +60,14 @@
         padding-inline: 1.5em .8em;
     }
 }
+
+.mail-folder-list .folder-icon {
+    width: 1.1em;
+    font-size: .95em;
+    text-align: center;
+    color: var(--gray1);
+}
+
+.mail-folder-list .btn-folder.active .folder-icon {
+    color: #041e49;
+}

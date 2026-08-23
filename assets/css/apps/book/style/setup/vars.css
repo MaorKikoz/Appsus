@@ -1,13 +1,15 @@
+/* the book app keeps its own names, now pointing at the shared appsus tokens
+   so all three apps render from one palette */
 :root {
-	--clr1: rgb(96, 107, 91);
-	--clr2: rgb(120, 99, 110);
+	--clr1: var(--clr-link);
+	--clr2: var(--gray1);
 
-	--clr1bg: rgb(153, 166, 149);
-	--clr1bg-light: rgb(205, 221, 200);
-	--clr2bg: rgb(233, 206, 221);
-	--clr2bg-light: rgb(247, 185, 219);
+	--clr1bg: var(--bg-hover);
+	--clr1bg-light: var(--bg-app);
+	--clr2bg: var(--bg-chip);
+	--clr2bg-light: var(--bg-hover);
 
-	--gray1: rgb(240, 240, 240);
-	--gray2: rgb(155, 155, 155);
-	--gray3: rgb(44, 44, 44);
+	--book-gray1: var(--gray1);
+	--book-gray2: var(--gray2);
+	--book-gray3: var(--gray3);
 }

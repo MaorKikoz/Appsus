@@ -3,7 +3,7 @@ const { useNavigate } = ReactRouter
 
 import { Loader } from '../cmps/Loader.jsx'
 import { bookService } from '../services/book.service.js'
-import { showSuccessMsg } from '../services/event-bus.service.js'
+import { showSuccessMsg } from '../../../services/event-bus.service.js'
 
 
 export function AddGoogleBook() {

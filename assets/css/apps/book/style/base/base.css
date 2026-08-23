@@ -1,45 +1,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
-* {
-	box-sizing: border-box;
-}
-
-html {
+.book-index {
 	font-family: 'Poppins', sans-serif;
+	color: var(--book-gray3);
 }
 
-body {
-	margin: 0;
-	color: var(--gray3);
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+.book-index h1,
+.book-index h2,
+.book-index h3,
+.book-index h4,
+.book-index h5,
+.book-index h6 {
 	margin: 0.5em 0 0.5em;
 }
 
-p {
+.book-index p {
 	margin: 0 0 1em;
 }
 
-a {
+.book-index a {
 	text-decoration: none;
 	color: unset;
 }
 
-/* Dont stretch my Media */
-img,
-embed,
-video,
-object {
+.book-index img,
+.book-index embed,
+.book-index video,
+.book-index object {
 	max-width: 100%;
-}
-
-/* Simple and useful CSS Debugging Technique */
-.debug * {
-	outline: 1px solid gold;
 }

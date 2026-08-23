@@ -6,7 +6,7 @@ import { bookService } from '../services/book.service.js'
 import { showSuccessMsg, showErrorMsg } from '../../../services/event-bus.service.js'
 
 import { AddReview } from '../cmps/AddReview.jsx'
-import { LongTxt } from '../cmps/LongTxt.jsx'
+import { LongTxt } from '../../../cmps/LongTxt.jsx'
 import { ReviewList } from '../cmps/ReviewList.jsx'
 import { Loader } from '../cmps/Loader.jsx'
 
@@ -84,7 +84,7 @@ export function BookDetails() {
 				Published: {book.publishedDate}
 				{vintageOrNew(book.publishedDate)}
 			</h3>
-			<LongTxt txt={book.description} length={book.description.length} />
+			<LongTxt length={100}>{book.description}</LongTxt>
 			<h3>
 				Page Count: {book.pageCount}
 				{readingType(book.pageCount)}

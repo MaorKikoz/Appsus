@@ -5,13 +5,11 @@
     flex-wrap: wrap;
     align-items: center;
     gap: .5em;
-    padding: .75em;
-    border-block-end: 1px solid var(--border);
 }
 
 .mail-filter input,
 .mail-filter select,
-.mail-filter button:not(.label-chip) {
+.mail-filter button {
     padding: .5em .8em;
     border: 1px solid var(--border);
     border-radius: 2em;
@@ -24,39 +22,42 @@
 .mail-filter input[name="txt"] {
     flex: 1;
     min-width: 10em;
+    padding: .7em 1.2em;
     border-color: transparent;
-    background-color: var(--bg-app);
-}
-
-.mail-filter input[name="txt"]:focus {
-    outline: 0;
     background-color: var(--bg-panel);
     box-shadow: var(--shadow-1);
 }
 
-.mail-filter button:not(.label-chip) {
+.mail-filter input[name="txt"]:hover,
+.mail-filter input[name="txt"]:focus {
+    outline: 0;
+    box-shadow: var(--shadow-2);
+}
+
+.mail-filter button {
     cursor: pointer;
 }
 
-.mail-filter button:not(.label-chip):hover {
+.mail-filter button:hover {
     background-color: var(--bg-hover);
 }
 
-/* both of these take a full row of the wrapping flex line */
-.mail-filter .label-picker,
+/* takes a full row of the wrapping flex line, as a card under the search */
 .mail-filter .advanced-filter {
     flex-basis: 100%;
-}
-
-.mail-filter .advanced-filter {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: .5em;
-    padding-block-start: .5em;
+
+    padding: .75em;
+    border-radius: .75em;
+    background-color: var(--bg-panel);
+    box-shadow: var(--shadow-1);
 }
 
 .mail-filter .advanced-filter label {
     font-size: .9em;
     color: var(--gray1);
 }
+

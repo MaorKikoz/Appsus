@@ -1,16 +1,28 @@
-.star-rating button {
-    padding: 0;
-	background-color: transparent;
-	border: none;
+ /* the star picker inside the new review row.
+    scoped on .book-details - see the note at the top of BookDetails.css.
+    the lit colour matches the inline #ffee00 ReviewPreview paints its own
+    stars with, so a picked rating and a saved one read the same */
+
+.book-details .star-rating {
+    display: flex;
+    gap: .1em;
+}
+
+.book-details .star-rating button {
     margin: 0;
-    
-	cursor: pointer;
+    padding: 0;
+    border: none;
+    background-color: transparent;
+
+    font-size: .85rem;
+    line-height: 1;
+    cursor: pointer;
 }
 
-.star-rating button.on {
-	color: #ffee00;
+.book-details .star-rating button.on {
+    color: #ffee00;
 }
 
-.star-rating button.off {
-	color: #ccc;
+.book-details .star-rating button.off {
+    color: #dadce0;
 }

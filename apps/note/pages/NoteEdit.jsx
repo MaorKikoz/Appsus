@@ -6,6 +6,7 @@ import { noteService } from '../services/note.service.js'
 import { CreateNoteByImg } from '../cmps/CreateNoteByImg.jsx'
 import { CreateNoteByVideo } from '../cmps/CreateNoteByVideo.jsx'
 import { CreateNoteByTodos } from '../cmps/CreateNoteByTodos.jsx'
+import { CreateNoteByDrawing } from '../cmps/CreateNoteByDrawing.jsx'
 import { ColorInput } from '../cmps/ColorInput.jsx'
 import { showErrorMsg, showSuccessMsg } from "../../../services/event-bus.service.js"
 

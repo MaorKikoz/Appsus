@@ -6,17 +6,55 @@
     padding: 1em;
 }
 
+/* gmail's top bar - it spans the whole app, sidebar included, which is why the
+   hamburger can sit to the left of the column it collapses */
+.mail-index .mail-topbar {
+    display: flex;
+    align-items: flex-start;
+    gap: .25em;
+}
+
+.mail-index .mail-topbar .mail-filter {
+    flex: 1;
+    min-width: 0;
+    max-width: 55em;
+}
+
+.mail-index .btn-menu {
+    flex: none;
+
+    width: 2.4em;
+    height: 2.4em;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+
+    background: none;
+    color: var(--gray1);
+    font: inherit;
+    font-size: 1.05rem;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.mail-index .btn-menu:hover {
+    background-color: var(--bg-hover);
+}
+
 .mail-index .mail-sidebar {
     display: grid;
     gap: 1em;
     align-content: start;
 }
 
+.mail-index .compose-link {
+    justify-self: start;
+}
+
 .mail-index .btn-compose {
     display: flex;
     align-items: center;
     gap: .75em;
-    justify-self: start;
 
     padding: .9em 1.5em;
     border: 0;
@@ -32,6 +70,21 @@
 
 .mail-index .btn-compose:hover {
     box-shadow: var(--shadow-2);
+}
+
+/* the labels sit with the folders, where gmail keeps them, instead of in a
+   row under the search field */
+.mail-index .sidebar-labels {
+    padding-inline: 1.5em .8em;
+}
+
+.mail-index .sidebar-labels h3 {
+    margin-block-end: .5em;
+    color: var(--gray1);
+    font-size: .75rem;
+    font-weight: 500;
+    letter-spacing: .06em;
+    text-transform: uppercase;
 }
 
 /* min-width keeps long subjects ellipsizing instead of stretching the grid */
@@ -52,25 +105,147 @@
 }
 
 @media (min-width: 750px) {
+
+    /* one bar across the top, then the sidebar and the list side by side */
     .mail-index {
         grid-template-columns: var(--sidebar-width) 1fr;
+        grid-template-rows: auto 1fr;
+        grid-template-areas:
+            "topbar topbar"
+            "sidebar main";
         align-items: start;
+
         height: calc(100vh - var(--header-height));
-        padding-inline-start: 0;
+        padding: .75em 1em .75em 0;
     }
 
-    .mail-index .mail-sidebar,
+    /* collapsed - gmail's icon rail, wide enough for the folder icons alone */
+    .mail-index.is-sidebar-collapsed {
+        grid-template-columns: var(--sidebar-rail) 1fr;
+    }
+
+    .mail-index .mail-topbar {
+        grid-area: topbar;
+        padding-inline-start: .9em;
+    }
+
+    .mail-index .mail-sidebar {
+        grid-area: sidebar;
+        height: 100%;
+        overflow-y: auto;
+    }
+
     .mail-index .mail-main {
+        grid-area: main;
         height: 100%;
     }
 
-    .mail-index .btn-compose {
+    .mail-index .compose-link {
         margin-inline-start: 1em;
     }
 
-    /* only the list scrolls - the filter bar stays put, like gmail */
+    /* only the list scrolls - the toolbar and the top bar stay put, like gmail */
     .mail-index .mail-list {
         flex: 1;
         overflow-y: auto;
+    }
+
+    /* the dimmer is a drawer affordance - a docked sidebar is never modal */
+    .mail-index .sidebar-backdrop {
+        display: none;
+    }
+
+    .mail-index.is-sidebar-collapsed .compose-label,
+    .mail-index.is-sidebar-collapsed .folder-label,
+    .mail-index.is-sidebar-collapsed .folder-count,
+    .mail-index.is-sidebar-collapsed .sidebar-labels h3 {
+        display: none;
+    }
+
+    .mail-index.is-sidebar-collapsed .compose-link {
+        justify-self: center;
+        margin-inline-start: 0;
+    }
+
+    .mail-index.is-sidebar-collapsed .btn-compose {
+        padding: .9em;
+        border-radius: 50%;
+    }
+
+    /* the half pill is a full pill again once it has nothing but an icon in it */
+    .mail-index.is-sidebar-collapsed .btn-folder {
+        justify-content: center;
+        padding-inline: .5em;
+        border-radius: 2em;
+    }
+
+    /* down in the rail the labels keep their colour and lose their word,
+       the way gmail stacks them as little swatches */
+    .mail-index.is-sidebar-collapsed .sidebar-labels {
+        padding-inline: 0;
+    }
+
+    .mail-index.is-sidebar-collapsed .sidebar-labels .label-picker {
+        flex-direction: column;
+        align-items: center;
+        gap: .45em;
+    }
+
+    .mail-index.is-sidebar-collapsed .sidebar-labels .label-chip {
+        width: 1.15rem;
+        height: 1.15rem;
+        padding: 0;
+        border-radius: .25rem;
+        overflow: hidden;
+        text-indent: -99rem;
+    }
+}
+
+/* the folder drawer - phones slide the sidebar in over the list */
+@media (max-width: 749px) {
+    .mail-index .sidebar-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 25;
+        background-color: rgba(32, 33, 36, .45);
+    }
+
+    .mail-index .mail-sidebar {
+        position: fixed;
+        inset-block: 0;
+        inset-inline-start: 0;
+        z-index: 30;
+
+        width: var(--sidebar-width);
+        padding-block: 1em;
+        overflow-y: auto;
+
+        background-color: var(--bg-panel);
+        box-shadow: var(--shadow-2);
+
+        transform: translateX(-100%);
+        transition: transform .2s ease;
+    }
+
+    .mail-index .mail-sidebar.is-open {
+        transform: translateX(0);
+    }
+
+    /* inside the drawer the folders stack, they are not a chip row any more */
+    .mail-index .mail-sidebar .mail-folder-list ul {
+        display: grid;
+        gap: .25em;
+        overflow-x: visible;
+    }
+
+    .mail-index .mail-sidebar .btn-folder {
+        border-radius: 0 2em 2em 0;
+        padding-inline: 1.5em .8em;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .mail-index .mail-sidebar {
+        transition: none;
     }
 }

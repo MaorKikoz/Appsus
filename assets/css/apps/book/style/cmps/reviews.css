@@ -1,13 +1,19 @@
-.reviews {
-	background-color: rgba(137, 137, 137, 0.324);
-	border-radius: 1em;
-	padding: 1em;
+ /* the reviews block at the foot of the details page.
+    scoped on .book-details - see the note at the top of BookDetails.css */
+
+.book-details .reviews {
+    margin-block-start: 1em;
+    padding: 1em;
+    border-radius: .75em;
+    background-color: var(--bg-app);
 }
 
-.reviews h4 {
-    padding-inline-start: 10px;
-    margin: 0;
-    font-size: 1.3em;
+.book-details .reviews h4 {
+    margin: 0 0 .75em;
+    padding-block-end: .5em;
+    border-block-end: 1px solid var(--border);
 
-    border-block-end: 1px solid rgb(195, 194, 194);
+    color: var(--book-gray3);
+    font-size: 1.05rem;
+    font-weight: 500;
 }

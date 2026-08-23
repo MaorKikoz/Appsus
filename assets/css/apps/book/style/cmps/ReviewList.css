@@ -1,20 +1,49 @@
-.review-list {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: 1em;
+ /* review list - a four column table: who / rating / when / delete.
+    the rows are subgrids of this one so every row keeps the same columns.
+    scoped on .book-details - see the note at the top of BookDetails.css */
 
-    list-style-type: none;
-    padding: 0px;
+.book-details .review-list {
+    display: grid;
+    grid-template-columns: minmax(6em, 1.2fr) minmax(6em, 1fr) minmax(7em, 1fr) auto;
+    gap: .5em;
+
     margin: 0;
-    
+    padding: 0;
+    list-style: none;
 }
-.review-list li {
+
+.book-details .review-list > li,
+.book-details .review-list > .add-review {
     display: grid;
     grid-template-columns: subgrid;
     grid-column: span 4;
+    align-items: center;
 }
 
-.review-list li:first-child {
-    padding-inline: 10px;
-    font-weight: bold;
+/* the heading row */
+.book-details .review-list > li:first-child {
+    padding-inline: .6em;
+
+    color: var(--book-gray1);
+    font-size: .75rem;
+    font-weight: 500;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+}
+
+/* the columns stop earning their keep on a phone - stack the rows instead */
+@media (max-width: 600px) {
+    .book-details .review-list {
+        grid-template-columns: 1fr;
+    }
+
+    .book-details .review-list > li,
+    .book-details .review-list > .add-review {
+        grid-column: span 1;
+        gap: .35em;
+    }
+
+    .book-details .review-list > li:first-child {
+        display: none;
+    }
 }

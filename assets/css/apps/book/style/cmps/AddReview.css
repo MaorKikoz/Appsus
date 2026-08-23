@@ -1,9 +1,59 @@
-.add-review {
+ /* the new review row - a form sitting on the list's own columns.
+    scoped on .book-details - see the note at the top of BookDetails.css */
+
+.book-details .add-review {
     display: grid;
     grid-template-columns: subgrid;
     grid-column: span 4;
     align-items: center;
+    gap: .5em;
 
-    padding-inline: 10px;
-	background-color: rgba(81, 81, 81, 0.218);
+    padding: .5em .6em;
+    border: 1px dashed var(--border);
+    border-radius: .5em;
+    background-color: var(--bg-panel);
+}
+
+.book-details .add-review input {
+    min-width: 0;
+
+    padding: .45em .7em;
+    border: 1px solid var(--border);
+    border-radius: .4em;
+
+    background-color: var(--bg-panel);
+    color: var(--book-gray3);
+    font: inherit;
+    font-size: .85rem;
+}
+
+.book-details .add-review input:focus {
+    outline: 0;
+    border-color: var(--clr-link);
+}
+
+/* direct child only - the star picker's buttons are nested and must not
+   pick up the submit styling */
+.book-details .add-review > button {
+    justify-self: end;
+
+    padding: .4em 1.1em;
+    border: 1px solid var(--clr-link);
+    border-radius: 2em;
+
+    background-color: var(--clr-link);
+    color: white;
+    font: inherit;
+    font-size: .8rem;
+    cursor: pointer;
+}
+
+.book-details .add-review > button:hover {
+    background-color: #0842a0;
+}
+
+@media (max-width: 600px) {
+    .book-details .add-review > button {
+        justify-self: stretch;
+    }
 }

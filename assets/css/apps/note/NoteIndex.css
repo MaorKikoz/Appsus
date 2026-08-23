@@ -22,16 +22,20 @@
  .new-note {
      display: flex;
      flex-direction: column;
-     align-items: center;
+     align-items: stretch;
 
-     gap: 60px;
-     margin-block-start: 25px;
+     gap: 1.5rem;
+     margin-block-start: 1.5rem;
  }
 
  .add-note-form {
      display: flex;
      flex-direction: column;
      position: relative;
+
+     width: 100%;
+     max-width: 37.5rem;
+     margin-inline: auto;
 
      border: 1px solid lightgray;
      border-radius: 0.6em;

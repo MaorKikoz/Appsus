@@ -42,6 +42,27 @@ export function NoteIndex() {
 		noteToAddRef.current = noteToAdd
 	}, [noteToAdd])
 
+	useEffect(() => {
+		const type = searchParams.get('addNote')
+		if (!type) return
+
+		const note = {
+			...noteService.getEmptyNote(),
+			id: '',
+			type,
+			noteTitle: searchParams.get('noteTitle') || '',
+			info: { txt: searchParams.get('noteTxt') || '' },
+		}
+
+		noteService.save(note)
+			.then(() => {
+				showSuccessMsg('Note added from your mail')
+				setSearchParams({})
+				loadNotes()
+			})
+			.catch(err => showErrorMsg('Could not add the note'))
+	}, [])
+
 	function loadNotes() {
 		return noteService.query(filterBy)
 			.then(notes => setNotes(notes))

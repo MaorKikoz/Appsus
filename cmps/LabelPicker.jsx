@@ -12,6 +12,7 @@ export function LabelPicker({ labels, selectedLabels = [], onToggleLabel }) {
                 key={label}
                 type="button"
                 className={getClassName(label)}
+                title={label}
                 onClick={() => onToggleLabel(label)}>
                 {label}
             </button>

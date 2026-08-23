@@ -21,11 +21,11 @@ export function Home() {
                 <p>Keep text, images and todo lists on a board you can pin, colour and search.</p>
                 <span className="card-cta">Open Keep →</span>
             </Link>
-            <Link to="/book" className="app-card note-card">
+            <Link to="/book" className="app-card book-card">
                 <span className="card-icon">📕</span>
                 <h2>missBooks</h2>
-                <p>Shop from a select variety of books, be it digitall or delivered to your dorrstep.</p>
-                <span className="card-cta">Open Keep →</span>
+                <p>Browse a curated shelf, read the reviews, and add your own rating.</p>
+                <span className="card-cta">Open Books →</span>
             </Link>
         </div>
     </section>

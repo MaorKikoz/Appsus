@@ -1,16 +1,59 @@
-.book-preview {
-	text-align: center;
-	padding: 0.3em;
+ /* book preview - cover first, then title and meta, like a play books shelf.
+    the cover is lifted with `order` so his markup stays untouched */
+
+.book-index .book-preview {
 	display: flex;
 	flex-direction: column;
-	align-items: center;
+	min-width: 0;
 }
 
-.book-preview h4 {
-	text-transform: capitalize;
-	color: black;
+.book-index .book-preview img {
+	order: -1;
+
+	width: 100%;
+	height: auto;
+	aspect-ratio: 2 / 3;
+	object-fit: cover;
+
+	border-radius: .5rem;
+	box-shadow: var(--shadow-1);
+	transition: box-shadow .2s ease, transform .2s ease;
 }
 
-.book-preview img {
-	max-width: 100px;
+.book-index .book-list li:hover .book-preview img {
+	box-shadow: var(--shadow-2);
+	transform: translateY(-3px);
+}
+
+.book-index .book-preview h2 {
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+
+	margin: .7rem 0 .1rem;
+	font-size: .9rem;
+	font-weight: 500;
+	line-height: 1.3;
+	color: var(--gray3);
+}
+
+.book-index .book-preview h4 {
+	margin: 0;
+	font-size: .78rem;
+	font-weight: 400;
+	line-height: 1.5;
+	color: var(--gray1);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.book-index .book-preview img {
+		transition: none;
+	}
+	.book-index .book-list li:hover .book-preview img {
+		transform: none;
+	}
 }

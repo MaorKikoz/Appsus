@@ -1,4 +1,4 @@
-.user-msg {
+.book-index .user-msg {
 	background-color: lightgray;
 	padding: 0.5em 1em;
 	position: fixed;
@@ -9,15 +9,15 @@
 	border-radius: 2px;
 }
 
-.user-msg.success {
+.book-index .user-msg.success {
 	background-color: var(--clr1);
 }
 
-.user-msg.error {
+.book-index .user-msg.error {
 	background-color: var(--clr2);
 }
 
-.user-msg button {
+.book-index .user-msg button {
 	float: right;
 	margin: 1em;
 }
